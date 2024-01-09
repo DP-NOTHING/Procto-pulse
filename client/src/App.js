@@ -1,15 +1,16 @@
 import './App.css';
 import Login from './components/Login/Login';
+import Landing from './components/Landing/Landing';
 import {
 	BrowserRouter as Router,
 	Route,
-  Routes,
+	Routes,
 	NavLink,
 } from 'react-router-dom';
 import SignUp from './components/SignUp/SignUp';
 function App() {
-  return (
-     <Router>
+	return (
+		<Router>
 			<Routes>
 				<Route
 					path='/login'
@@ -19,9 +20,13 @@ function App() {
 					path='/signup'
 					element={<SignUp />}
 				/>
+				<Route
+					path='/landing-page'
+					element={<Landing />}
+				/>
 			</Routes>
 		</Router>
-  );
+	);
 }
 
 export default App;
