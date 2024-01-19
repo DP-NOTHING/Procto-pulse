@@ -1,0 +1,35 @@
+/* ExamTimer.css */
+
+.exam-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 20px; /* Increased padding for each container */
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .exam-info {
+    flex: 1;
+  }
+  
+  .timer {
+    text-align: right;
+  }
+  
+  .exam-info h3 {
+    margin: 0;
+    color: #333;
+  }
+  
+  .exam-info p {
+    margin: 0;
+    color: #666;
+  }
+  
+  .timer p {
+    margin: 0;
+    color: #008080;
+  }
+  

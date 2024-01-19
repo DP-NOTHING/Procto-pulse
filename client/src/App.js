@@ -1,12 +1,6 @@
 import React from 'react';
 import Login from './components/Login/Login';
 import Landing from './components/Landing/Landing';
-import {
-	BrowserRouter as Router,
-	Route,
-	Routes,
-	NavLink,
-} from 'react-router-dom';
 import SignUp from './components/SignUp/SignUp';
 import ExamTimer from './components/ExamTimer/ExamTimer';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';

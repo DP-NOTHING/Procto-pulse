@@ -1,0 +1,52 @@
+/* client/src/TeacherDashboard.css */
+.teacher-dashboard {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .exam-form {
+    margin-bottom: 20px;
+  }
+  
+  .exam-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .exam-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .exam-form button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .exam-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .exam-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .exam-list li {
+    margin-bottom: 10px;
+  }
+  
+  .exam-list a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  .exam-list a:hover {
+    text-decoration: underline;
+  }
