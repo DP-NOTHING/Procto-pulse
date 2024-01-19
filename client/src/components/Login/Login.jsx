@@ -13,6 +13,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -32,15 +35,43 @@ const defaultTheme = createTheme();
 
 export default function Login() {
 
-  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+   const[email,setEmail]=useState('');
+	const [password, setPassword] = useState('');
+	const [valerror,setvalerror] = useState('');
+	const Navigate = useNavigate();
+	// const { setToken } = useAuth();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email == '') {
+      setvalerror('please enter a username');
+    }
+    else if (password == '') {
+      setvalerror('please enter a password');
+    } else {
+      axios
+        .post(`${process.env.REACT_APP_BACKEND}/login/`, {
+          email,
+          password,
+        })
+        .then((res) => {
+          localStorage.setItem('email', email);
+          localStorage.setItem('token', res.data.token);
+          // setToken(res.data.token);
+          // console.log('----------');
+          // console.log(res);
+          // setIsLogged(true);
+          Navigate('/home', {
+            state: {
+              email,
+            },
+          });
+        })
+        .catch(res => {
+          setvalerror(res.response.data);
+        });
+    }
+
   };
 
   return (
@@ -116,7 +147,7 @@ export default function Login() {
                     Forgot password?
                   </Link>
                 </Grid>
-                <Grid item onClick={()=>{navigate("/signup")}}>
+                <Grid item onClick={()=>{Navigate("/signup")}}>
                   <Link href="#" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
