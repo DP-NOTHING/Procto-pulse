@@ -13,6 +13,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import gif from '../../images/Exams.gif';
+
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -76,22 +78,27 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" justifyContent="center" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
           item
           xs={false}
           sm={4}
           md={7}
+          justifyContent="center"
+          alignItems="center" // Add this line to center the content vertically
+          display="flex"
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            
+            // backgroundRepeat: 'no-repeat',
+            // backgroundColor: (t) =>
+            //   t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            // backgroundSize: 'cover',
+            // backgroundPosition: 'center',
           }}
-        />
+        >
+          <img src={gif} alt="gif"/>
+        </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
