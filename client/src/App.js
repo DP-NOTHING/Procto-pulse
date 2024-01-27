@@ -8,6 +8,7 @@ import ExamTimer from './components/ExamTimer/ExamTimer';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import TeacherDashboard from './components/TeacherDashboard/TeacherDashboard';
 import TeacherExams from './components/TeacherExam/TeacherExam';
+import ExamDetails from './components/ExamDetails/ExamDetails';
 
 function App() {
 	const exams = Array.from({ length: 10 }, (_, index) => ({
@@ -25,6 +26,10 @@ function App() {
 				<Route
 					path='/signup'
 					element={<SignUp />}
+				/>
+				<Route
+					path='/exam/:id'
+					element={<ExamDetails />}
 				/>
 				<Route
 					path='/exam'
