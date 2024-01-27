@@ -18,13 +18,34 @@ function App() {
 	return (
 		<Router>
 			<Routes>
-				<Route path="/login" element={<Login />} />
-				<Route path="/signup" element={<SignUp />} />
-				<Route path="/exam" element={<ExamTimer exams={exams} />} />
-				<Route path="/teacherDashboard" element={<TeacherDashboard />} />
-				<Route path="/teacherexam" element={<TeacherExams />} />
-				<Route path='/examform'	element={<ApplicationForm />}/>
-				<Route path='/*'element={<Landing />}/>
+				<Route
+					path='/login'
+					element={<Login />}
+				/>
+				<Route
+					path='/signup'
+					element={<SignUp />}
+				/>
+				<Route
+					path='/exam'
+					element={<ExamTimer exams={exams} />}
+				/>
+				<Route
+					path='/teacherDashboard'
+					element={<TeacherDashboard />}
+				/>
+				<Route
+					path='/teacherexam'
+					element={<TeacherExams />}
+				/>
+				<Route
+					path='/examform'
+					element={<ApplicationForm />}
+				/>
+				<Route
+					path='/*'
+					element={<Landing />}
+				/>
 			</Routes>
 		</Router>
 	);
