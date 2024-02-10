@@ -13,9 +13,9 @@ router.use(express.json());
 router.route('/login').post(async (req, res) => {
 	try {
 		console.log(req.body);
-		const { email, password } = req.body;
+		const { email, password, role } = req.body;
 		console.log(email, password);
-		const user = await User.findOne({ email });
+		const user = await User.findOne({ email, role });
 
 		if (!user) {
 			return res.status(404).json({ message: 'email not found' });

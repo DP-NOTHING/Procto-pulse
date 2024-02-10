@@ -53,8 +53,15 @@ app.post('/api/exams', async (req, res) => {
 	}
 });
 
+const test = require('./test').router;
+app.use('/test', test);
+
 app.listen(process.env.PORT, async () => {
 	const connection = await connect();
+	// const conn = await mongoose.connect(process.env.CONNECTIONSTRING);
+	// const gridfsBucket = new mongoose.mongo.GridFSBucket(mongoose.connection, {
+	// 	bucketName: 'media',
+	// });
 	console.log('connected');
 	console.log(
 		`server is up and running at http://127.0.0.1:${process.env.PORT}`

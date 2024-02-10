@@ -15,35 +15,31 @@ const UserSchema = new mongoose.Schema({
 	email: {
 		type: String,
 		require: true,
-		unique:true,
-	}
-	
+		unique: true,
+	},
+	role: {
+		type: String,
+		require: true,
+	},
 });
 const User = mongoose.model('User', UserSchema);
 
+const examSchema = new mongoose.Schema({
+	noOfQuestions: {
+		type: Number,
+		require: true,
+	},
 
+	testTime: {
+		type: String,
+		require: true,
+	},
 
+	testDateTime: { type: String, require: true },
 
+	examName: { type: String, require: true },
+});
 
- const examSchema = new mongoose.Schema({
+const Exam = mongoose.model('Exam', examSchema);
 
-   noOfQuestions: {
-	type:Number,
-	require:true,},
-
-  testTime: {
-	type:String,
-	require:true,},
-
-  testDateTime: {type:String,
-	require:true,},
-
-  examName: {type:String,
-	require:true,},
-
-  
- });
-
- const Exam = mongoose.model('Exam', examSchema);
-
- module.exports = {Exam,User};
+module.exports = { Exam, User };

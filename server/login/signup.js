@@ -8,7 +8,7 @@ router.use(express.json());
 router.route('/signup').post(async (req, res) => {
 	try {
 		// const { firstname, lastname, email, password } = req.body.formData;
-		const { firstname, lastname, email, password } = req.body;
+		const { firstname, lastname, email, password, role } = req.body;
 		console.log('----------------------------');
 		console.log(firstname);
 		console.log('----------------------------');
@@ -28,6 +28,7 @@ router.route('/signup').post(async (req, res) => {
 			lastname,
 			email,
 			password: hashedPassword,
+			role,
 		});
 
 		console.log(newUser);
