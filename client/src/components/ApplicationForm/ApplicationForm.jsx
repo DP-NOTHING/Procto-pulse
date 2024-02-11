@@ -14,7 +14,8 @@ import Typography from '@mui/material/Typography';
 import AddressForm from './AddressForm';
 import ContactDetails from './ContactDetails';
 import UploadDoc from './UploadDoc';
-
+import { useState } from 'react';
+import axios from 'axios';
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -30,24 +31,75 @@ function Copyright() {
 
 const steps = ['Address', 'Contact Deatils', 'Upload Documents'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <ContactDetails />;
-    case 2:
-      return <UploadDoc />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
+
+
 
 export default function ApplicationForm() {
   const [activeStep, setActiveStep] = React.useState(0);
-
+  const [formData, setFormData] = useState({
+    studentId: "",
+    examId: "",
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
+    university: "",
+    personalEmail: "",
+    schoolEmail: "",
+    degree: "",
+    branch: "",
+    graduationDate: "",
+    cpi: "",
+    photo: "",
+    idProof: "",
+  });
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <AddressForm formData={formData} setFormData={setFormData}/>;
+      case 1:
+        return <ContactDetails formData={formData} setFormData={setFormData}/>;
+      case 2:
+        return <UploadDoc formData={formData} setFormData={setFormData}/>;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
+  
+ 
   const handleNext = () => {
+
     setActiveStep(activeStep + 1);
+    console.log(activeStep);
+    
+    if(activeStep+1 == steps.length){
+      // console.log(activeStep);
+      const data = new FormData();
+      for ( var key in  formData ) {
+          data.append(key, formData[key]);
+      }
+      
+      console.log(formData);
+      for (var pair of data.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
+      axios.post(`${process.env.REACT_APP_BACKEND}/applicationform/`, data,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      
+      }).
+      then((res) => {
+        console.log(res);
+        console.log(res.data);
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
   };
 
   const handleBack = () => {

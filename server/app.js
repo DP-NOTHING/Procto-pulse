@@ -1,36 +1,36 @@
 const dotenv = require('dotenv');
-//const session = require('cookie-session');
 const cors = require('cors');
 const { connect } = require('./db/connection');
+const express = require('express');
+const app = express();
+const fs = require('fs');
+
+dotenv.config({ path: '../.env' });
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded());
+
 const loginRouter = require('./login/login').router;
 const signupRouter = require('./login/signup').router;
 const logoutRouter = require('./login/logout').router;
 const teacherDashboard = require('./teacher/teacherDashboard').router;
-
-const express = require('express');
-const app = express();
-app.use(cors());
-// var bodyParser=require('body-parser');
-// app.use(bodyParser.json());
-dotenv.config({ path: '../.env' });
-
-app.use(express.json());
-app.use(express.urlencoded());
+const applicationformRouter = require('./applicationform/applicationform').router;
 
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/logout', logoutRouter);
+app.use('/applicationform',applicationformRouter);
 
-app.all('/', (_, res) => {
-	// res.end(`${_.session.username}`);
-	res.end('hello');
-});
-const fs = require('fs');
+// app.post('/applicationform/', async (req, res) => {
+// 	res.json({ success: true });
+// });
 
 const { Test } = require('./db/schema');
 const path = require('path');
 const mongoose = require('mongoose');
 const Exam = require('./db/schema');
+
 
 app.use('/teacherDashboard', teacherDashboard);
 

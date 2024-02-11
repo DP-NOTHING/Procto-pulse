@@ -4,8 +4,8 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-
-export default function AddressForm() {
+import { TextareaAutosize } from '@mui/base';
+export default function AddressForm({ formData, setFormData}) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -21,6 +21,13 @@ export default function AddressForm() {
             fullWidth
             autoComplete="given-name"
             variant="standard"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                firstName: e.target.value,
+              });
+            }}
+            value={formData.firstName}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -32,6 +39,13 @@ export default function AddressForm() {
             fullWidth
             autoComplete="family-name"
             variant="standard"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                lastName: e.target.value,
+              });
+            }}
+            value={formData.lastName}
           />
         </Grid>
         <Grid item xs={12}>
@@ -41,20 +55,19 @@ export default function AddressForm() {
             name="address1"
             label="Address line 1"
             fullWidth
+            minRows={2}
+            multiline
             autoComplete="shipping address-line1"
-            variant="standard"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                address: e.target.value,
+              });
+            }}
+            value={formData.address}
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-          />
-        </Grid>
+        
         <Grid item xs={12} sm={6}>
           <TextField
             required
@@ -64,6 +77,13 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                city: e.target.value,
+              });
+            }}
+            value={formData.city}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -73,6 +93,13 @@ export default function AddressForm() {
             label="State/Province/Region"
             fullWidth
             variant="standard"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                state: e.target.value,
+              });
+            }}
+            value={formData.state}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -84,6 +111,13 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping postal-code"
             variant="standard"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                zip: e.target.value,
+              });
+            }}
+            value={formData.zip}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -95,6 +129,13 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping country"
             variant="standard"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                country: e.target.value,
+              });
+            }}
+            value={formData.country}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -106,6 +147,13 @@ export default function AddressForm() {
             fullWidth
             autoComplete="University name"
             variant="standard"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                university: e.target.value,
+              });
+            }}
+            value={formData.university}
           />
         </Grid>
       </Grid>
