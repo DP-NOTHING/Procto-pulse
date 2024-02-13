@@ -13,6 +13,9 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Radio from '@mui/material/Radio';
@@ -20,6 +23,7 @@ import { FormLabel } from '@mui/material';
 import { deepPurple, deepOrange } from '@mui/material/colors';
 import Loader from '../Loader/Loader';
 import axios from 'axios';
+
 const defaultTheme = createTheme();
 
 export default function SignUp() {

@@ -1,52 +1,73 @@
 /* client/src/TeacherDashboard.css */
+
 .teacher-dashboard {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .exam-form {
-    margin-bottom: 20px;
-  }
-  
-  .exam-form label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .exam-form input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-  }
-  
-  .exam-form button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .exam-form button:hover {
-    background-color: #0056b3;
-  }
-  
-  .exam-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .exam-list li {
-    margin-bottom: 10px;
-  }
-  
-  .exam-list a {
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-  }
-  
-  .exam-list a:hover {
-    text-decoration: underline;
-  }
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  position: relative; 
+}
+
+.teacher-dashboard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+ 
+  background-size: cover;
+  opacity: 0.1; 
+  z-index: -1; 
+}
+
+.teacher-dashboard h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333333;
+}
+
+.exam-form label {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555555;
+}
+
+.exam-form input {
+  padding: 12px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #555555;
+}
+
+.exam-list li {
+  margin-bottom: 10px;
+}
+
+.exam-link {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.register-button {
+  padding: 15px 30px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.register-button:hover {
+  background-color: #0056b3;
+}

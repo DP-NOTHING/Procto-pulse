@@ -1,10 +1,10 @@
-/* ExamTimer.css */
+
 
 .exam-container {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    padding: 20px; /* Increased padding for each container */
+    padding: 20px; 
     background-color: #f8f8f8;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
