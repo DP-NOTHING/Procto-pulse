@@ -15,7 +15,7 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import CallIcon from '@mui/icons-material/Call';
 import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import { Link } from 'react-router-dom';
-
+import SpaceDashboardRoundedIcon from '@mui/icons-material/SpaceDashboardRounded';
 const pages = ['Login', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -157,6 +157,19 @@ function ResponsiveAppBar() {
 									</Typography>
 								</MenuItem>
 							</Link>
+							<Link
+								style={{ all: 'unset' }}
+								to={'/login'}
+							>
+								<MenuItem
+									key={'login'}
+									onClick={handleCloseNavMenu}
+								>
+									<Typography textAlign='center'>
+										Dashboard
+									</Typography>
+								</MenuItem>
+							</Link>
 						</Menu>
 					</Box>
 					{/* <AdbIcon
@@ -220,6 +233,19 @@ function ResponsiveAppBar() {
 						</Link>
 						<Link
 							style={{ all: 'unset' }}
+							to={localStorage.getItem('role')=='teacher' ? '/teacherDashboard' : '/exam'}
+						>
+							<Button
+								key={'dashboard'}
+								onClick={handleCloseNavMenu}
+								sx={{ mx: 1, my: 2, color: 'white' }}
+								endIcon={<SpaceDashboardRoundedIcon />}
+							>
+								Dashboard
+							</Button>
+						</Link>
+						<Link
+							style={{ all: 'unset' }}
 							to={'/contactus'}
 						>
 							<Button
@@ -244,6 +270,8 @@ function ResponsiveAppBar() {
 								faq
 							</Button>
 						</Link>
+						
+						
 					</Box>
 					<Box sx={{ flexGrow: 0 }}>
 						<Tooltip title='Open settings'>

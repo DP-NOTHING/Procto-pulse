@@ -19,11 +19,14 @@ const upload = multer({ storage });
 
 router.route('/').post(upload.fields([{ name: 'photo', maxCount: 1 }, { name: 'idProof', maxCount: 1 }]),async (req, res) => {
 	
-		// console.log(req.body);
+		console.log(req.body);
         console.log(req.files);
         console.log("hi");
+
+        req.body.photo = req.files.photo[0].filename;
+        req.body.idProof = req.files.idProof[0].filename;
 		const newForm = new Applicationform(
-			req.body.data,
+			req.body,
 		);
 
 		await newForm.save();

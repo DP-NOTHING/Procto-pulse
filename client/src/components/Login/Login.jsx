@@ -85,7 +85,53 @@ export default function Login() {
         });
     }
 
-  };
+		if (email == '') {
+			setvalerror('please enter a username');
+		} else if (password == '') {
+			setvalerror('please enter a password');
+		} else if (role == '') {
+			setvalerror('please choose appropriate role');
+		} else {
+			console.log(process.env.REACT_APP_BACKEND);
+			setIsLoading(true);
+			axios
+				.post(`${process.env.REACT_APP_BACKEND}/login/login`, {
+					email,
+					password,
+					role,
+				})
+				.then((res) => {
+					localStorage.setItem('email', email);
+					localStorage.setItem('token', res.data.token);
+					localStorage.setItem('role', role);
+					setIsLoading(false);
+					// setToken(res.data.token);
+					// console.log('----------');
+					// console.log(res.response.status);
+					// setIsLogged(true);
+					Navigate('/home', {
+						state: {
+							email,
+						},
+					});
+				})
+				.catch((res) => {
+					// console.log(res.response.data);
+					// alert(res.response.data.message);
+					setvalerror(res.response.data.message);
+				});
+		}
+	};
+	useEffect(() => {
+		if (valerror) {
+			setIsLoading(false);
+			alert(valerror);
+			setvalerror('');
+		}
+	}, [valerror]);
+	return (
+		<>
+			{isLoading && <Loader />}
 
   return (
     <ThemeProvider theme={defaultTheme}>

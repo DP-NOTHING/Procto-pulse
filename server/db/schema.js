@@ -97,11 +97,11 @@ const ApplicationFormSchema = new mongoose.Schema({
 	},
 	photo : {
 		type: String,
-		// require: true,
+		require: true,
 	},
 	idProof : {
 		type: String,
-		// require: true,
+		require: true,
 	},
 });
 
