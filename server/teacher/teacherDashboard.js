@@ -2,19 +2,30 @@ const express = require('express');
 const router = express.Router();
 const { Exam } = require('../db/schema');
 const bcrypt = require('bcryptjs');
-const { default: mongoose } = require('mongoose');
+const { GridFsStorage } = require('multer-gridfs-storage');
+const multer = require('multer');
+const Grid = require('gridfs-stream');
+const mongoose = require('mongoose');
+// const { default: mongoose } = require('mongoose');
 router.use(express.json());
 
-router.route('/').post(async (req, res) => {
-	try {
-		const { noOfQuestions, testTime, testDateTime, examName } = req.body;
+const gfs = Grid(mongoose.connection, mongoose.mongo);
+gfs.collection('File');
 
-		const newExam = new Exam({
-			noOfQuestions,
-			testTime,
-			testDateTime,
-			examName,
-		});
+const storage = new GridFsStorage({
+    url: `${process.env.CONNECTIONSTRING}`,
+  });
+
+const upload = multer({ storage });
+
+router.route('/').post(upload.single('file'),async (req, res) => {
+	try {
+		// const { noOfQuestions, testTime, testDateTime, examName } = req.body;
+		req.body.file = req.file.filename;
+		console.log(req.body);
+		console.log("4444444");
+		console.log(req.file);
+		const newExam = new Exam(req.body);
 
 		console.log(newExam);
 		await newExam.save();

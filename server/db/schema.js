@@ -121,6 +121,11 @@ const examSchema = new mongoose.Schema({
 	testDateTime: { type: String, require: true },
 
 	examName: { type: String, require: true },
+
+	file : {
+		type: String,
+		require: true,
+	}
 });
 
 const Exam = mongoose.model('Exam', examSchema);

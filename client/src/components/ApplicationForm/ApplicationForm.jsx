@@ -142,7 +142,7 @@ export default function ApplicationForm() {
                 Thank you for submitting Application Form.
               </Typography>
               <Typography variant="subtitle1">
-                Your order application no is #2001539. Please remember your application Id, Your exam will start on Date xyz.
+                Your registration no is #2001539. Please remember your application Id, Your exam will start on Date xyz.
                 Best Of Luck.
               </Typography>
             </React.Fragment>
