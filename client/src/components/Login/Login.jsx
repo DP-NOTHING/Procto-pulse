@@ -77,13 +77,13 @@ export default function Login() {
 				.then((res) => {
 					localStorage.setItem('email', email);
 					localStorage.setItem('token', res.data.token);
-					localStorage.setItem('role', role);	
+					localStorage.setItem('role', role);
 					setIsLoading(false);
 					// setToken(res.data.token);
 					// console.log('----------');
 					// console.log(res.response.status);
 					// setIsLogged(true);
-					Navigate('/home', {
+					Navigate('/teacherDashboard', {
 						state: {
 							email,
 						},

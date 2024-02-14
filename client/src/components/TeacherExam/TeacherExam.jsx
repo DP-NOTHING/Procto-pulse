@@ -1,41 +1,95 @@
-// client/src/TeacherExams.js
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import InboxIcon from '@mui/icons-material/Inbox';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import Typography from '@mui/material/Typography';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
 
-const TeacherExams = ({ teacherId }) => {
-  const [teacherExams, setTeacherExams] = useState([]);
-
-  useEffect(() => {
-    // Fetch the list of exams for a particular teacher from the backend API
-    const fetchTeacherExams = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3001/api/teacher/${teacherId}/exams`);
-        setTeacherExams(response.data.teacherExams);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchTeacherExams();
-
-    // Cleanup function to prevent memory leaks
-    return () => {
-      // Your cleanup logic, if needed
-    };
-  }, [teacherId]);
-
-  return (
-    <div>
-      <h2>Teacher Exams</h2>
-      <ul>
-        {teacherExams.map((exam) => (
-          <li key={exam.id}>
-            Exam Name: {exam.name} | Registrations: {exam.registrationCount}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-export default TeacherExams;
+export default function TeacherExam() {
+	return (
+		<Box sx={{ width: '100%', maxWidth: 'fit' }}>
+			{' '}
+			<Typography
+				sx={{ mt: 4, mb: 2, ml: 4 }}
+				variant='h4'
+				component='div'
+			>
+				Icon with text
+			</Typography>
+			<List>
+				<ListItem
+					disablePadding
+					secondaryAction={
+						<IconButton
+							edge='end'
+							aria-label='delete'
+						>
+							<DeleteIcon />
+						</IconButton>
+					}
+				>
+					<ListItemButton>
+						<ListItemIcon>
+							<InboxIcon />
+						</ListItemIcon>
+						<ListItemText
+							primary='Inbox'
+							secondaryAction={
+								<IconButton
+									edge='end'
+									aria-label='delete'
+								>
+									<DeleteIcon />
+								</IconButton>
+							}
+						/>
+					</ListItemButton>
+				</ListItem>
+				<ListItem
+					disablePadding
+					secondaryAction={
+						<IconButton
+							edge='end'
+							aria-label='delete'
+						>
+							<DeleteIcon />
+						</IconButton>
+					}
+				>
+					<ListItemButton>
+						<ListItemIcon>
+							<DraftsIcon />
+						</ListItemIcon>
+						<ListItemText
+							primary='Drafts'
+							secondaryAction={
+								<IconButton
+									edge='end'
+									aria-label='delete'
+								>
+									<DeleteIcon />
+								</IconButton>
+							}
+						/>
+					</ListItemButton>
+				</ListItem>
+				<ListItem disablePadding>
+					<ListItemButton sx={{ backgroundColor: '#F5EBFF' }}>
+						<ListItemIcon>
+							<AddIcon />
+						</ListItemIcon>
+						<ListItemText primary='Create New Exam' />
+					</ListItemButton>
+				</ListItem>
+			</List>
+		</Box>
+	);
+}

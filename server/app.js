@@ -14,13 +14,14 @@ app.use(express.urlencoded());
 const loginRouter = require('./login/login').router;
 const signupRouter = require('./login/signup').router;
 const logoutRouter = require('./login/logout').router;
-const teacherDashboard = require('./teacher/teacherDashboard').router;
-const applicationformRouter = require('./applicationform/applicationform').router;
+const exam = require('./teacher/exam').router;
+const applicationformRouter =
+	require('./applicationform/applicationform').router;
 
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/logout', logoutRouter);
-app.use('/applicationform',applicationformRouter);
+app.use('/applicationform', applicationformRouter);
 
 // app.post('/applicationform/', async (req, res) => {
 // 	res.json({ success: true });
@@ -31,8 +32,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const Exam = require('./db/schema');
 
-
-app.use('/teacherDashboard', teacherDashboard);
+app.use('/exam', exam);
 
 app.post('/api/exams', async (req, res) => {
 	try {

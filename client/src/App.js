@@ -6,7 +6,7 @@ import ApplicationForm from './components/ApplicationForm/ApplicationForm';
 
 import ExamTimer from './components/ExamTimer/ExamTimer';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import TeacherDashboard from './components/TeacherDashboard/TeacherDashboard';
+import CreateExam from './components/CreateExam/CreateExam';
 import TeacherExams from './components/TeacherExam/TeacherExam';
 import ExamDetails from './components/ExamDetails/ExamDetails';
 import ExamEntryForm from './components/ExamSecurity/ExamSecurity';
@@ -37,8 +37,8 @@ function App() {
 					element={<ExamTimer exams={exams} />}
 				/>
 				<Route
-					path='/teacherDashboard'
-					element={<TeacherDashboard />}
+					path='/create-exam'
+					element={<CreateExam />}
 				/>
 				<Route
 					path='/teacherexam'
@@ -52,7 +52,10 @@ function App() {
 					path='/*'
 					element={<Landing />}
 				/>
-				<Route path="/ExamSecurity" element={<ExamEntryForm/>}/>
+				<Route
+					path='/ExamSecurity'
+					element={<ExamEntryForm />}
+				/>
 			</Routes>
 		</Router>
 	);
