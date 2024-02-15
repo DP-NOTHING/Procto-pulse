@@ -1,4 +1,5 @@
 // db/schema.js
+const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
@@ -26,12 +27,12 @@ const UserSchema = new mongoose.Schema({
 });
 
 const ApplicationFormSchema = new mongoose.Schema({
-	studentId :{
+	studentId: {
 		type: String,
 		require: true,
 		// unique: true,
 	},
-	examId :{
+	examId: {
 		type: String,
 		require: true,
 	},
@@ -47,59 +48,59 @@ const ApplicationFormSchema = new mongoose.Schema({
 		type: String,
 		require: true,
 	},
-	city : {
+	city: {
 		type: String,
 		require: true,
 	},
-	state : {
+	state: {
 		type: String,
 		require: true,
 	},
-	zip : {
+	zip: {
 		type: Number,
 		require: true,
 	},
-	country : {
+	country: {
 		type: String,
 		require: true,
 	},
-	university : {
+	university: {
 		type: String,
 		require: true,
 	},
-	personalEmail : {
-		type: String,
-		require: true,
-		minLength: 7,
-		maxLength: 254,
-	},
-	schoolEmail : {
+	personalEmail: {
 		type: String,
 		require: true,
 		minLength: 7,
 		maxLength: 254,
 	},
-	degree : {
+	schoolEmail: {
+		type: String,
+		require: true,
+		minLength: 7,
+		maxLength: 254,
+	},
+	degree: {
 		type: String,
 		require: true,
 	},
-	branch : {
+	branch: {
 		type: String,
 		require: true,
 	},
-	graduationDate : {
+	graduationDate: {
 		type: Date,
 		require: true,
 	},
-	cpi : {
+	cpi: {
 		type: mongoose.Types.Decimal128,
 		require: true,
 	},
-	photo : {
+	photo: {
 		type: String,
 		require: true,
 	},
-	idProof : {
+	idProof: {
 		type: String,
 		require: true,
 	},
@@ -122,12 +123,19 @@ const examSchema = new mongoose.Schema({
 
 	examName: { type: String, require: true },
 
-	file : {
+	file: {
 		type: String,
 		require: true,
-	}
+	},
+	teacherEmail: {
+		type: String,
+		require: true,
+	},
 });
 
 const Exam = mongoose.model('Exam', examSchema);
-const Applicationform = mongoose.model('Applicationform', ApplicationFormSchema);
-module.exports = { Exam, User , Applicationform};
+const Applicationform = mongoose.model(
+	'Applicationform',
+	ApplicationFormSchema
+);
+module.exports = { Exam, User, Applicationform };

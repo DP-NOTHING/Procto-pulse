@@ -13,18 +13,18 @@ const gfs = Grid(mongoose.connection, mongoose.mongo);
 gfs.collection('File');
 
 const storage = new GridFsStorage({
-    url: `${process.env.CONNECTIONSTRING}`,
-  });
+	url: `${process.env.CONNECTIONSTRING}`,
+});
 
 const upload = multer({ storage });
 
-router.route('/').post(upload.single('file'),async (req, res) => {
+router.route('/').post(upload.single('file'), async (req, res) => {
 	try {
 		// const { noOfQuestions, testTime, testDateTime, examName } = req.body;
 		req.body.file = req.file.filename;
-		console.log(req.body);
-		console.log("4444444");
-		console.log(req.file);
+		// console.log(req.body);
+		// console.log('4444444');
+		// console.log(req.file);
 		const newExam = new Exam(req.body);
 
 		console.log(newExam);
@@ -36,10 +36,10 @@ router.route('/').post(upload.single('file'),async (req, res) => {
 		res.status(500).json({ message: 'Internal Server Error' });
 	}
 });
-// getting all exams-list
-router.route('/').get(async (req, res) => {
+// getting all exams-list created by a teacher
+router.route('/:email').get(async (req, res) => {
 	try {
-		const exams = await Exam.find({});
+		const exams = await Exam.find({ teacherEmail: req.params.email });
 		res.status(200).json(exams);
 	} catch (error) {
 		res.status(500).json({ message: 'Internal Server Error' });
@@ -50,6 +50,15 @@ router.route('/:id').get(async (req, res) => {
 	try {
 		const exam = await Exam.findOne({ _id: req.params.id });
 		res.status(200).json(exam);
+	} catch (error) {
+		res.status(500).json({ message: 'Internal Server Error' });
+	}
+});
+router.route('/:id').delete(async (req, res) => {
+	try {
+		// const exam = await Exam.findOne({ _id: req.params.id });
+		await Exam.deleteOne({ _id: req.params.id });
+		res.status(200).json([{ message: 'Success' }]);
 	} catch (error) {
 		res.status(500).json({ message: 'Internal Server Error' });
 	}

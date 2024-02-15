@@ -83,7 +83,7 @@ export default function Login() {
 					// console.log('----------');
 					// console.log(res.response.status);
 					// setIsLogged(true);
-					Navigate('/teacherDashboard', {
+					Navigate('/teacherexam', {
 						state: {
 							email,
 						},
