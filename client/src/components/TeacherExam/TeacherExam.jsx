@@ -16,6 +16,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loader from '../Loader/Loader';
 import { useNavigate } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
+import { blue, red } from '@mui/material/colors';
 
 export default function TeacherExam() {
 	// useEffect(())
@@ -38,6 +40,7 @@ export default function TeacherExam() {
 	};
 	useEffect(() => {
 		// console.log('jnsdnknsdkxnkdsn');
+
 		const fetchExams = async () => {
 			try {
 				const response = await axios.get(
@@ -45,6 +48,7 @@ export default function TeacherExam() {
 						process.env.REACT_APP_BACKEND
 					}/exam/${localStorage.getItem('email')}`
 				);
+
 				return response;
 			} catch (error) {
 				console.error('Error fetching data:', error);
@@ -53,9 +57,18 @@ export default function TeacherExam() {
 
 		fetchExams()
 			.then((response) => {
-				console.log(response.data);
+				// console.log(response.data);
 				setExams(response.data);
+				const exams = response.data;
+				console.log(exams);
 				setIsLoading(false);
+				// console.log(exams);
+				// console.log(new Date(exams[1].testDateTime));
+				// console.log(new Date(exams[0].testDateTime));
+				// console.log(
+				// 	new Date(exams[1].testDateTime) <
+				// 		new Date(exams[0].testDateTime)
+				// );
 			})
 			.catch((res) => {
 				console.error(res);
@@ -75,6 +88,13 @@ export default function TeacherExam() {
 						component='div'
 					>
 						Exams
+					</Typography>
+					<Typography
+						sx={{ mt: 4, mb: 2, ml: 4 }}
+						variant='h5'
+						component='div'
+					>
+						Upcoming Exams
 					</Typography>
 					<List>
 						{/* <ListItem
@@ -113,40 +133,98 @@ export default function TeacherExam() {
 								<ListItemText primary='Drafts' />
 							</ListItemButton>
 						</ListItem> */}
-						{exams.map((exam) => (
-							<ListItem
-								key={exam._id.toString()}
-								disablePadding
-								secondaryAction={
-									// <div
-									// 	onClickCapture={deleteExam}
-									// 	id={`${exam._id.toString()}`}
-									// >
-									<IconButton
-										id={`${exam._id.toString()}`}
-										edge='end'
-										aria-label='delete'
-										onClick={deleteExam}
+						{exams
+							.filter(
+								(exam) =>
+									new Date(exam.testDateTime) > new Date()
+							)
+							.map((exam, i) => (
+								<ListItem
+									sx={{
+										m: 1,
+										':hover': {
+											backgroundColor: blue[50],
+										},
+									}}
+									key={exam._id.toString()}
+									disablePadding
+									secondaryAction={
+										// <div
+										// 	onClickCapture={deleteExam}
+										// 	id={`${exam._id.toString()}`}
+										// >
+										<>
+											<IconButton
+												id={`${exam._id.toString()}`}
+												edge='end'
+												aria-label='edit'
+												onClick={(e) =>
+													Navigate('/create-exam', {
+														state: {
+															edit: true,
+															exam: exams.find(
+																(exam) =>
+																	exam._id ==
+																	e
+																		.currentTarget
+																		.id
+															),
+														},
+													})
+												}
+												sx={{
+													m: 1,
+													':hover': {
+														color: 'black',
+													},
+												}}
+												size='large'
+											>
+												<EditIcon />
+											</IconButton>
+											<IconButton
+												id={`${exam._id.toString()}`}
+												edge='end'
+												aria-label='delete'
+												onClick={deleteExam}
+												sx={{
+													m: 1,
+													':hover': {
+														color: 'black',
+													},
+												}}
+												size='large'
+											>
+												<DeleteIcon />
+											</IconButton>
+										</>
+										// </div>
+									}
+								>
+									<ListItemButton
+										sx={{
+											p: 2,
+										}}
 									>
-										<DeleteIcon />
-									</IconButton>
-									// </div>
-								}
-							>
-								<ListItemButton>
-									<ListItemIcon>
-										<DraftsIcon />
-									</ListItemIcon>
-									<ListItemText
-										primary={`${exam.examName}`}
-									/>
-								</ListItemButton>
-							</ListItem>
-						))}
+										<ListItemIcon>
+											<Typography component='div'>
+												{i + 1}.
+											</Typography>
+											{/* <DraftsIcon /> */}
+										</ListItemIcon>
+										<ListItemText
+											primary={`${exam.examName}`}
+										/>
+									</ListItemButton>
+								</ListItem>
+							))}
 						<ListItem disablePadding>
 							<ListItemButton
 								onClick={() => Navigate('/create-exam')}
-								sx={{ backgroundColor: '#F5EBFF' }}
+								sx={{
+									p: 2,
+									':hover': { backgroundColor: '#F5EBFF' },
+								}}
 							>
 								<ListItemIcon>
 									<AddIcon />
@@ -154,6 +232,64 @@ export default function TeacherExam() {
 								<ListItemText primary='Create New Exam' />
 							</ListItemButton>
 						</ListItem>
+					</List>
+					<Typography
+						sx={{ mt: 4, mb: 2, ml: 4 }}
+						variant='h5'
+						component='div'
+					>
+						Previous Exams
+					</Typography>
+					<List>
+						{exams
+							.filter(
+								(exam) =>
+									new Date(exam.testDateTime) < new Date()
+							)
+							.map((exam, i) => (
+								<ListItem
+									sx={{
+										m: 1,
+										':hover': {
+											backgroundColor: red[50],
+										},
+									}}
+									key={exam._id.toString()}
+									disablePadding
+									secondaryAction={
+										// <div
+										// 	onClickCapture={deleteExam}
+										// 	id={`${exam._id.toString()}`}
+										// >
+										<IconButton
+											id={`${exam._id.toString()}`}
+											edge='end'
+											aria-label='delete'
+											onClick={deleteExam}
+											sx={{
+												m: 1,
+												':hover': { color: 'black' },
+											}}
+											size='large'
+										>
+											<DeleteIcon />
+										</IconButton>
+										// </div>
+									}
+								>
+									<ListItemButton sx={{ p: 2 }}>
+										<ListItemIcon>
+											<Typography component='div'>
+												{i + 1}.
+											</Typography>
+											{/* <DraftsIcon /> */}
+										</ListItemIcon>
+										<ListItemText
+											primary={`${exam.examName}`}
+										/>
+									</ListItemButton>
+								</ListItem>
+							))}
 					</List>
 				</Box>
 			)}
