@@ -15,10 +15,12 @@ import Container from '@mui/material/Container';
 import AppBar from '@mui/material/AppBar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import Stack from '@mui/material/Stack';
 import { ListItem } from '@mui/material';
 import Paper from '@mui/material/Paper';
+// import { CssBaseline } from '@material-ui/core';
 import { styled } from '@mui/material/styles';
-
+import './Landing.css';
 const Item = styled(Paper)(({ theme, textAlign }) => ({
 	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
 	...theme.typography.body2,
@@ -39,148 +41,222 @@ export default function Landing() {
 	const navigate = useNavigate();
 	return (
 		<>
+			{/* <CssBaseline /> */}
 			<NavBar />
-			<Box sx={{ width: '100%' }}>
-				<Grid
-					container
-					rowSpacing={1}
-					columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+			<Stack gap={5}>
+				<Stack
+					// display='flex'
+					spacing={2}
+					alignItems='center'
 				>
 					<Grid
-						display={'flex'}
-						item
-						xs={6}
+						container
+						// className={classes.root}
+						style={{
+							height: 'auto',
+						}}
 					>
-						<Item textAlign='left'>
-							<div style={{ fontSize: '30px', color: 'black' }}>
-								<h1>
-									Exam Security.
-									<br />
-									Done Right.
-								</h1>
-								<h4>Deter. Detect. Prevent.</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur
-									adipisicing elit. Sint, itaque natus nostrum
-									mollitia possimus veniam accusantium. Lorem
-									ipsum dolor sit amet, consectetur
-									adipisicing elit. Sint, itaque natus nostrum
-									mollitia possimus veniam accusantium.
-								</p>
-							</div>
-						</Item>
-					</Grid>
-					<Grid
-						item
-						xs={6}
-						display={'flex'}
-					>
-						<Item textAlign='center'>
-							<img
-								src='/assets/3d-business-man-studying-online.png'
-								height={800}
-								width={600}
-								// style={{
-								// 	maxWidth: '100%',
-								// 	height: 'auto',
-								// 	padding: '0',
-								// 	margin: '0',
-								// 	height: '100%',
-								// 	width: '100%',
-								// }}
-								alt=''
-							/>
-						</Item>
-					</Grid>
-					<Grid
-						display={'flex'}
-						item
-						xs={6}
-					>
-						<Item textAlign='left'>
-							<div style={{ fontSize: '30px', color: 'black' }}>
-								<h1>
-									Exam Security.
-									<br />
-									Done Right.
-								</h1>
-								<h4>Deter. Detect. Prevent.</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur
-									adipisicing elit. Sint, itaque natus nostrum
-									mollitia possimus veniam accusantium. Lorem
-									ipsum dolor sit amet, consectetur
-									adipisicing elit. Sint, itaque natus nostrum
-									mollitia possimus veniam accusantium.
-								</p>
-							</div>
-						</Item>
-					</Grid>
-					<Grid
-						item
-						xs={6}
-						display={'flex'}
-					>
-						<Item textAlign='center'>
-							<img
-								src='/assets/3d-business-man-studying-online.png'
-								height={800}
-								width={600}
-								alt=''
-							/>
-						</Item>
-					</Grid>
-					{/* <Grid
-						item
-						xs={6}
-						display={'flex'}
-					>
-						<Item textAlign='center'>
-							3{' '}
-							<Box
-								component={'img'}
-								height={400}
-								width={300}
-								src='/assets/clip-man-hitting-the-target.png'
-							></Box> */}
-					{/* <img
-								src='/assets/clip-man-hitting-the-target.png'
-								height={800}
-								width={600}
-								alt=''
-							/> */}
-					{/* </Item>
-					</Grid>
-					<Grid
-						item
-						xs={6}
-						display={'flex'}
-					>
-						<Item textAlign='right'>
-							4{' '}
-							<ListItem
-								style={{
-									fontSize: '30px',
-									color: 'black',
-								}}
+						<Grid
+							container
+							sm={6}
+							xs={12}
+						>
+							<Grid
+								container
+								style={{ padding: '20%' }}
 							>
-								<div>
-									<h1>Our Mission</h1>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur
-										adipisicing elit. Sint, itaque natus
-										nostrum mollitia possimus veniam
-										accusantium. Lorem ipsum dolor sit amet,
-										consectetur adipisicing elit. Sint,
-										itaque natus nostrum mollitia possimus
-										veniam accusantium.
-									</p>
-								</div>
-							</ListItem>
-						</Item>
-					</Grid> */}
-				</Grid>
-			</Box>
+								<Grid
+									item
+									sm={12}
+									xs={12}
+								>
+									<Typography
+										variant='h3'
+										color='textPrimary'
+										gutterBottom
+									>
+										Exam Security.
+										<br />
+										Done Right.
+										<h5>Deter. Detect. Prevent.</h5>
+									</Typography>
+									<Typography
+										variant='h5'
+										paragraph
+									>
+										<p>
+											Lorem ipsum dolor sit amet,
+											consectetur adipisicing elit. Sint,
+											itaque natus nostrum mollitia
+											possimus veniam accusantium. Lorem
+											ipsum dolor sit amet, consectetur
+											adipisicing elit. Sint, itaque natus
+											nostrum mollitia possimus veniam
+											accusantium.
+										</p>
+									</Typography>
+								</Grid>
+							</Grid>
+						</Grid>
+
+						<Grid
+							container
+							sm={6}
+							xs={12}
+						>
+							<Grid
+								container
+								style={{ padding: '20%' }}
+							>
+								<Grid
+									item
+									sm={12}
+									xs={12}
+								>
+									<img src='/assets/3d-business-man-studying-online.png' />
+								</Grid>
+							</Grid>
+						</Grid>
+					</Grid>
+
+					<Grid
+						container
+						// className={classes.root}
+						style={{
+							height: 'auto',
+						}}
+					>
+						<Grid
+							container
+							sm={6}
+							xs={12}
+						>
+							<Grid
+								container
+								style={{ padding: '20%' }}
+							>
+								<Grid
+									item
+									sm={12}
+									xs={12}
+								>
+									<Typography
+										variant='h3'
+										color='textPrimary'
+										gutterBottom
+									>
+										Exam Security.
+										<br />
+										Done Right.
+										<h5>Deter. Detect. Prevent.</h5>
+									</Typography>
+									<Typography
+										variant='h5'
+										paragraph
+									>
+										<p>
+											Lorem ipsum dolor sit amet,
+											consectetur adipisicing elit. Sint,
+											itaque natus nostrum mollitia
+											possimus veniam accusantium. Lorem
+											ipsum dolor sit amet, consectetur
+											adipisicing elit. Sint, itaque natus
+											nostrum mollitia possimus veniam
+											accusantium.
+										</p>
+									</Typography>
+								</Grid>
+							</Grid>
+						</Grid>
+						<Grid
+							container
+							sm={6}
+							xs={12}
+						>
+							<Grid
+								container
+								style={{ padding: '20%' }}
+							>
+								<Grid
+									item
+									sm={12}
+									xs={12}
+								>
+									<img src='/assets/3d-business-man-studying-online.png' />
+								</Grid>
+							</Grid>
+						</Grid>
+					</Grid>
+					<Grid
+						container
+						// className={classes.root}
+						style={{
+							height: 'auto',
+						}}
+					>
+						<Grid
+							container
+							sm={6}
+							xs={12}
+						>
+							<Grid
+								container
+								style={{ padding: '20%' }}
+							>
+								<Grid
+									item
+									sm={12}
+									xs={12}
+								>
+									<Typography
+										variant='h3'
+										color='textPrimary'
+										gutterBottom
+									>
+										Exam Security.
+										<br />
+										Done Right.
+										<h5>Deter. Detect. Prevent.</h5>
+									</Typography>
+									<Typography
+										variant='h5'
+										paragraph
+									>
+										<p>
+											Lorem ipsum dolor sit amet,
+											consectetur adipisicing elit. Sint,
+											itaque natus nostrum mollitia
+											possimus veniam accusantium. Lorem
+											ipsum dolor sit amet, consectetur
+											adipisicing elit. Sint, itaque natus
+											nostrum mollitia possimus veniam
+											accusantium.
+										</p>
+									</Typography>
+								</Grid>
+							</Grid>
+						</Grid>
+						<Grid
+							container
+							sm={6}
+							xs={12}
+						>
+							<Grid
+								container
+								style={{ padding: '20%' }}
+							>
+								<Grid
+									item
+									sm={12}
+									xs={12}
+								>
+									<img src='/assets/3d-business-man-studying-online.png' />
+								</Grid>
+							</Grid>
+						</Grid>
+					</Grid>
+				</Stack>
+			</Stack>
 		</>
 	);
 	// return (
@@ -190,9 +266,9 @@ export default function Landing() {
 	// 			<Grid
 	// 				container
 	// 				spacing={2}
-	// 				columns={16}
+	// 				rows={16}
 	// 				// rowSpacing={1}
-	// 				// columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+	// 				// rowSpacing={{ xs: 1, sm: 2, md: 3 }}
 	// 				// overflow={'hidden'}
 	// 			>
 	// 				<Grid
