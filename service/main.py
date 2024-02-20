@@ -8,8 +8,6 @@ import numpy as np
 
 model = get_model("yolov5n", device=0, min_face=24)
 app = FastAPI()
-
-
     
 @app.post("/check")
 def check(file: UploadFile = File(...), file2: UploadFile = File(...)):
@@ -21,9 +19,9 @@ def check(file: UploadFile = File(...), file2: UploadFile = File(...)):
     
     pass1 = file2.file.read()
     pass2 = cv2.imdecode(np.fromstring(pass1, np.uint8), cv2.IMREAD_COLOR)
-    veri=DeepFace.verify(contents, pass2,detector_backend="opencv",model_name="Facenet512",align=True)
-    return {"no_of_person": nop,
-            "verification": veri["verified"]}
+    veri=DeepFace.verify(contents, pass2,detector_backend="opencv",model_name="Facenet512",enforce_detection=False,align=True,distance_metric="euclidean_l2")
+    print(veri)
+    return {"no_of_person": nop, "verified": veri['verified']}
 
 
 

@@ -10,6 +10,7 @@ import CreateExam from './components/CreateExam/CreateExam';
 import TeacherExams from './components/TeacherExam/TeacherExam';
 import ExamDetails from './components/ExamDetails/ExamDetails';
 import ExamEntryForm from './components/ExamSecurity/ExamSecurity';
+import ExamPage from './components/ExamPage/ExamPage';
 
 function App() {
 	const exams = Array.from({ length: 10 }, (_, index) => ({
@@ -20,6 +21,7 @@ function App() {
 	return (
 		<Router>
 			<Routes>
+				<Route path='/exampage/:examid/:studentid' element={<ExamPage />} />
 				<Route
 					path='/login'
 					element={<Login />}

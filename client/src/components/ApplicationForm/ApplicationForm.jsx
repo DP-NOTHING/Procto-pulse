@@ -78,6 +78,7 @@ export default function ApplicationForm() {
     
     if(activeStep+1 == steps.length){
       // console.log(activeStep);
+      setFormData({...formData, studentId:localStorage.getItem('email')});
       const data = new FormData();
       for ( var key in  formData ) {
           data.append(key, formData[key]);

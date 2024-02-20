@@ -23,8 +23,8 @@ router.route('/').post(upload.fields([{ name: 'photo', maxCount: 1 }, { name: 'i
         console.log(req.files);
         console.log("hi");
 
-        req.body.photo = req.files.photo[0].filename;
-        req.body.idProof = req.files.idProof[0].filename;
+        req.body.photo = req.files.photo[0].id.toString();
+        req.body.idProof = req.files.idProof[0].id.toString();
 		const newForm = new Applicationform(
 			req.body,
 		);
