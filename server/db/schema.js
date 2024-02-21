@@ -71,14 +71,14 @@ const ApplicationFormSchema = new mongoose.Schema({
 	personalEmail: {
 		type: String,
 		require: true,
-		minLength: 7,
-		maxLength: 254,
+		// minLength: 7,
+		// maxLength: 254,
 	},
 	schoolEmail: {
 		type: String,
 		require: true,
-		minLength: 7,
-		maxLength: 254,
+		// minLength: 7,
+		// maxLength: 254,
 	},
 	degree: {
 		type: String,
@@ -131,6 +131,7 @@ const examSchema = new mongoose.Schema({
 		type: String,
 		require: true,
 	},
+	participants: { type: [mongoose.Schema.Types.ObjectId] },
 });
 
 const Exam = mongoose.model('Exam', examSchema);

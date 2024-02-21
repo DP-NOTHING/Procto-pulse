@@ -25,6 +25,16 @@ const gfs = new mongoose.mongo.GridFSBucket(mongoose.connection, {
 
 const upload = multer({ storage });
 
+// getting all exams-list created by all teachers (for students)
+router.route('/').get(async (req, res) => {
+	try {
+		const exams = await Exam.find({});
+		// console.log(exams);
+		res.status(200).json(exams);
+	} catch (error) {
+		res.status(500).json({ message: 'Internal Server Error' });
+	}
+});
 router.route('/').post(upload.single('file'), async (req, res) => {
 	try {
 		// const { noOfQuestions, testTime, testDateTime, examName } = req.body;
@@ -74,9 +84,10 @@ router.route('/:examId').put(upload.single('file'), async (req, res) => {
 	}
 });
 // getting details regarding exam
-router.route('/:id').get(async (req, res) => {
+router.route('/get-exam-details/:id').get(async (req, res) => {
 	try {
 		const exam = await Exam.findOne({ _id: req.params.id });
+		// console.log(exams)
 		res.status(200).json(exam);
 	} catch (error) {
 		res.status(500).json({ message: 'Internal Server Error' });

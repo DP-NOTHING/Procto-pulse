@@ -7,11 +7,11 @@ import ApplicationForm from './components/ApplicationForm/ApplicationForm';
 import ExamTimer from './components/ExamTimer/ExamTimer';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CreateExam from './components/CreateExam/CreateExam';
-import TeacherExams from './components/TeacherExam/TeacherExam';
+import TeacherDashbboard from './components/TeacherDashboard/TeacherDashboard';
 import ExamDetails from './components/ExamDetails/ExamDetails';
 import ExamEntryForm from './components/ExamSecurity/ExamSecurity';
 import ExamPage from './components/ExamPage/ExamPage';
-
+import StudentDashbboard from './components/StudentDashboard/StudentDashboard';
 function App() {
 	const exams = Array.from({ length: 10 }, (_, index) => ({
 		examName: `Exam ${index + 1}`,
@@ -21,7 +21,10 @@ function App() {
 	return (
 		<Router>
 			<Routes>
-				<Route path='/exampage/:examid/:studentid' element={<ExamPage />} />
+				<Route
+					path='/exampage/:examid/:studentid'
+					element={<ExamPage />}
+				/>
 				<Route
 					path='/login'
 					element={<Login />}
@@ -31,7 +34,7 @@ function App() {
 					element={<SignUp />}
 				/>
 				<Route
-					path='/exam/:id'
+					path='/examdetails'
 					element={<ExamDetails />}
 				/>
 				<Route
@@ -43,20 +46,24 @@ function App() {
 					element={<CreateExam />}
 				/>
 				<Route
-					path='/teacherexam'
-					element={<TeacherExams />}
+					path='/teacher-dashboard'
+					element={<TeacherDashbboard />}
+				/>
+				<Route
+					path='/student-dashboard'
+					element={<StudentDashbboard />}
 				/>
 				<Route
 					path='/examform'
 					element={<ApplicationForm />}
 				/>
 				<Route
-					path='/*'
-					element={<Landing />}
-				/>
-				<Route
 					path='/ExamSecurity'
 					element={<ExamEntryForm />}
+				/>
+				<Route
+					path='/*'
+					element={<Landing />}
 				/>
 			</Routes>
 		</Router>
