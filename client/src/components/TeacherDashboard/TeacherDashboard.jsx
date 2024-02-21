@@ -18,8 +18,9 @@ import Loader from '../Loader/Loader';
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import { blue, red } from '@mui/material/colors';
+import { Button } from '@mui/material';
 
-export default function TeacherExam() {
+export default function TeacherDashboard() {
 	// useEffect(())
 	const [isLoading, setIsLoading] = useState(true);
 	const Navigate = useNavigate();
@@ -37,6 +38,13 @@ export default function TeacherExam() {
 		} catch (error) {
 			console.error(error);
 		}
+	};
+	const handleExamDetails = async (e) => {
+		e.preventDefault();
+		// console.log(e.currentTarget.id);
+		setIsLoading(true);
+		Navigate('/examdetails', { state: { examId: e.currentTarget.id } });
+		setIsLoading(false);
 	};
 	useEffect(() => {
 		// console.log('jnsdnknsdkxnkdsn');
@@ -60,7 +68,7 @@ export default function TeacherExam() {
 				// console.log(response.data);
 				setExams(response.data);
 				const exams = response.data;
-				console.log(exams);
+				// console.log(exams);
 				setIsLoading(false);
 				// console.log(exams);
 				// console.log(new Date(exams[1].testDateTime));
@@ -154,6 +162,12 @@ export default function TeacherExam() {
 										// 	id={`${exam._id.toString()}`}
 										// >
 										<>
+											<Button
+												id={`${exam._id.toString()}`}
+												onClick={handleExamDetails}
+											>
+												details
+											</Button>
 											<IconButton
 												id={`${exam._id.toString()}`}
 												edge='end'

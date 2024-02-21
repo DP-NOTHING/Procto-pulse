@@ -75,6 +75,7 @@ export default function Login() {
 					role,
 				})
 				.then((res) => {
+					localStorage.setItem('id', res.data._id);
 					localStorage.setItem('email', email);
 					localStorage.setItem('token', res.data.token);
 					localStorage.setItem('role', role);
@@ -83,11 +84,18 @@ export default function Login() {
 					// console.log('----------');
 					// console.log(res.response.status);
 					// setIsLogged(true);
-					Navigate('/teacherexam', {
-						state: {
-							email,
-						},
-					});
+					if (role == 'teacher')
+						Navigate('/teacher-dashboard', {
+							state: {
+								email,
+							},
+						});
+					if (role == 'student')
+						Navigate('/student-dashboard', {
+							state: {
+								email,
+							},
+						});
 				})
 				.catch((res) => {
 					// console.log(res.response.data);

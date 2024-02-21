@@ -116,7 +116,7 @@ const CreateExam = () => {
 					// 	'http://localhost:3000/exam'
 					// );
 					// setExams(examsResponse.data.exams);
-					Navigate('/teacherexam');
+					Navigate('/teacher-dashboard');
 					setIsLoading(false);
 				} else {
 					alert(`Exam registration failed ${response.data.message}`);
@@ -142,7 +142,7 @@ const CreateExam = () => {
 					// 	'http://localhost:3000/exam'
 					// );
 					// setExams(examsResponse.data.exams);
-					Navigate('/teacherexam');
+					Navigate('/teacher-dashboard');
 					setIsLoading(false);
 				} else {
 					alert(`Exam registration failed ${response.data.message}`);
@@ -235,6 +235,7 @@ const CreateExam = () => {
 							style={{ margin: 3 }}
 							type='button'
 							className='register-button'
+							onClick={() => Navigate('/teacher-dashboard')}
 						>
 							Back
 						</button>

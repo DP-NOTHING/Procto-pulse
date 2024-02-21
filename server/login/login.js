@@ -34,6 +34,7 @@ router.route('/login').post(async (req, res) => {
 				firstname: user.firstname,
 				lastname: user.lastname,
 				password: user.password,
+				_id: user._id.toString(),
 				// token,
 			});
 		} else {
