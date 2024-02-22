@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Exam } = require('../db/schema');
+const { Exam, User, Applicationform } = require('../db/schema');
 const bcrypt = require('bcryptjs');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const multer = require('multer');
@@ -83,16 +83,7 @@ router.route('/:examId').put(upload.single('file'), async (req, res) => {
 		res.status(500).json({ message: 'Internal Server Error' });
 	}
 });
-// getting details regarding exam
-router.route('/get-exam-details/:id').get(async (req, res) => {
-	try {
-		const exam = await Exam.findOne({ _id: req.params.id });
-		// console.log(exams)
-		res.status(200).json(exam);
-	} catch (error) {
-		res.status(500).json({ message: 'Internal Server Error' });
-	}
-});
+
 router.route('/:id').delete(async (req, res) => {
 	try {
 		// const exam = await Exam.findOne({ _id: req.params.id });

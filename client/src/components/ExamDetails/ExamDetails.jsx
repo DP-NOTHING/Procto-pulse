@@ -20,13 +20,16 @@ import EditIcon from '@mui/icons-material/Edit';
 import { blue, red } from '@mui/material/colors';
 import { Button } from '@mui/material';
 import { useLocation } from 'react-router-dom';
-
+import ParticipantsList from './ParticipantsList';
 const ExamDetails = () => {
+	// const
 	const [details, setDetails] = useState({});
 	const [participants, setParticipants] = useState([]);
 	const state = useLocation().state;
-	const examID = state.examId;
+	const Navigate = useNavigate();
+	// console.log(state);
 	const [isLoading, setIsLoading] = useState(false);
+	const examID = state.examId;
 	// if(state=)
 	// const { id: examID } = useParams();
 	// console.log(examID);
@@ -57,7 +60,7 @@ const ExamDetails = () => {
 			// console.log(`${process.env.REACT_APP_BACKEND}/exam/${examID}`);
 			try {
 				const res = await axios.get(
-					`${process.env.REACT_APP_BACKEND}/exam/get-exam-details/${examID}`
+					`${process.env.REACT_APP_BACKEND}/applicationform/get-exam-details/${examID}`
 				);
 				// console.log(res.data);
 				/* {
@@ -80,8 +83,8 @@ const ExamDetails = () => {
 		fetchExamDetails(examID)
 			.then((res) => {
 				// console.log(res);
-				setDetails(res);
-				setParticipants(res.participants);
+				setDetails(res.exam);
+				setParticipants(res.participantsList);
 				setIsLoading(false);
 			})
 			.catch((err) => console.error(err));
@@ -99,6 +102,17 @@ const ExamDetails = () => {
 						Exams Details
 					</Typography>
 					<List>
+						<ListItem>
+							<Button
+								onClick={() => {
+									Navigate('/teacher-dashboard');
+								}}
+								size='large'
+								variant='contained'
+							>
+								Back
+							</Button>
+						</ListItem>
 						<ListItem>Exam Name: {details.examName}</ListItem>
 						<ListItem>
 							Number Of Questions: {details.noOfQuestions}
@@ -110,22 +124,17 @@ const ExamDetails = () => {
 						<ListItem>
 							Test Duration (in Hours): {details.testTime}
 						</ListItem>
-
 						<ListItem>
-							Participants: {participants.length}
-							{/* {participants.map((p) => {
-								return (
-									<>
-										
-									</>
-								);
-							})} */}
-						</ListItem>
-						<ListItem>
-							<Button onClick={downloadPaper}>
+							<Button
+								variant='contained'
+								size='medium'
+								onClick={downloadPaper}
+								sx={{ m: 0 }}
+							>
 								view question paper
 							</Button>
 						</ListItem>
+						<ParticipantsList data={participants} />
 					</List>
 				</Box>
 			)}

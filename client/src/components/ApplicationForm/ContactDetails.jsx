@@ -65,13 +65,16 @@ export default function ContactDetails({ formData, setFormData }) {
 						fullWidth
 						autoComplete='email'
 						variant='standard'
+						value={localStorage.getItem('email')}
+						inputProps={{ readOnly: true }}
 						onChange={(e) => {
 							setFormData({
 								...formData,
 								personalEmail: e.target.value,
 							});
 						}}
-						value={formData.personalEmail}
+						disabled
+						// value={formData.personalEmail}
 					/>
 				</Grid>
 				<Grid

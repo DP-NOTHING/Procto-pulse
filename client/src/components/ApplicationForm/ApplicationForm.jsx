@@ -43,21 +43,21 @@ const steps = ['Address', 'Contact Deatils', 'Upload Documents'];
 export default function ApplicationForm() {
 	const [isLoading, setIsLoading] = useState(false);
 	const state = useLocation().state;
-	console.log(state);
+	// console.log(state);
 	const Navigate = useNavigate();
 	const [activeStep, setActiveStep] = React.useState(0);
 	const [formData, setFormData] = useState({
 		studentId: localStorage.getItem('id'),
 		examId: state.examId,
-		firstName: '',
-		lastName: '',
+		firstname: '',
+		lastname: '',
 		address: '',
 		city: '',
 		state: '',
 		zip: '',
 		country: '',
 		university: '',
-		personalEmail: '',
+		personalEmail: localStorage.getItem('email'),
 		schoolEmail: '',
 		degree: '',
 		branch: '',
@@ -94,14 +94,15 @@ export default function ApplicationForm() {
 		}
 	}
 
-	const handleNext = () => {
+	const handleNext = (e) => {
+		e.preventDefault();
 		setIsLoading(true);
 		setActiveStep(activeStep + 1);
 		// setIsLoading(false);
-		console.log(activeStep);
+		// console.log(activeStep);
 
 		if (activeStep + 1 == steps.length) {
-			// setIsLoading(true)
+			setIsLoading(true);
 			// console.log(activeStep);
 			// setFormData({
 			// 	...formData,
@@ -113,7 +114,7 @@ export default function ApplicationForm() {
 			}
 			// data.append('studentId', localStorage.getItem('id'));
 			// data.append('examId', state.examId);
-			// console.log(data);
+			console.log(formData);
 			// for (var pair of data.entries()) {
 			// 	console.log(pair[0] + ', ' + pair[1]);
 			// }
@@ -131,15 +132,15 @@ export default function ApplicationForm() {
 					console.log(res);
 					console.log(res.data);
 					alert('registration successfull !');
-					Navigate('/studentDashboard');
+					Navigate('/student-dashboard');
 					setIsLoading(false);
 				})
 				.catch((err) => {
 					alert(err);
+					Navigate('/student-dashboard');
 					setIsLoading(false);
 				});
-		}
-		setIsLoading(false);
+		} else setIsLoading(false);
 	};
 
 	const handleBack = () => {
@@ -149,100 +150,106 @@ export default function ApplicationForm() {
 	};
 
 	return (
-		<React.Fragment>
-			<CssBaseline />
-			<AppBar
-				position='absolute'
-				color='default'
-				elevation={0}
-				sx={{
-					position: 'relative',
-					borderBottom: (t) => `1px solid ${t.palette.divider}`,
-				}}
-			>
-				<Toolbar>
-					<Typography
-						variant='h6'
-						color='inherit'
-						noWrap
+		<>
+			{isLoading && <Loader />}
+			{!isLoading && (
+				<React.Fragment>
+					<CssBaseline />
+					<AppBar
+						position='absolute'
+						color='default'
+						elevation={0}
+						sx={{
+							position: 'relative',
+							borderBottom: (t) =>
+								`1px solid ${t.palette.divider}`,
+						}}
 					>
-						Exam name
-					</Typography>
-				</Toolbar>
-			</AppBar>
-			<Container
-				component='main'
-				maxWidth='md'
-				sx={{ mb: 4 }}
-			>
-				<Paper
-					variant='outlined'
-					sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
-				>
-					<Typography
-						component='h1'
-						variant='h4'
-						align='center'
-					>
-						Application Form
-					</Typography>
-					<Stepper
-						activeStep={activeStep}
-						sx={{ pt: 3, pb: 5 }}
-					>
-						{steps.map((label) => (
-							<Step key={label}>
-								<StepLabel>{label}</StepLabel>
-							</Step>
-						))}
-					</Stepper>
-					{activeStep === steps.length ? (
-						<React.Fragment>
+						<Toolbar>
 							<Typography
-								variant='h5'
-								gutterBottom
+								variant='h6'
+								color='inherit'
+								noWrap
 							>
-								Thank you for submitting Application Form.
+								Exam name
 							</Typography>
-							<Typography variant='subtitle1'>
-								Your registration no is #2001539. Please
-								remember your application Id, Your exam will
-								start on Date xyz. Best Of Luck.
-							</Typography>
-						</React.Fragment>
-					) : (
-						<React.Fragment>
-							{getStepContent(activeStep)}
-							<Box
-								sx={{
-									display: 'flex',
-									justifyContent: 'flex-end',
-								}}
+						</Toolbar>
+					</AppBar>
+					<Container
+						component='main'
+						maxWidth='md'
+						sx={{ mb: 4 }}
+					>
+						<Paper
+							variant='outlined'
+							sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+						>
+							<Typography
+								component='h1'
+								variant='h4'
+								align='center'
 							>
-								{activeStep !== 0 && (
-									<Button
-										onClick={handleBack}
-										sx={{ mt: 3, ml: 1 }}
-									>
-										Back
-									</Button>
-								)}
-
-								<Button
-									variant='contained'
-									onClick={handleNext}
-									sx={{ mt: 3, ml: 1 }}
+								Application Form
+							</Typography>
+							<Stepper
+								activeStep={activeStep}
+								sx={{ pt: 3, pb: 5 }}
+							>
+								{steps.map((label) => (
+									<Step key={label}>
+										<StepLabel>{label}</StepLabel>
+									</Step>
+								))}
+							</Stepper>
+							{activeStep !== steps.length && (
+								/* (
+							<React.Fragment>
+								<Typography
+									variant='h5'
+									gutterBottom
 								>
-									{activeStep === steps.length - 1
-										? 'Submit'
-										: 'Next'}
-								</Button>
-							</Box>
-						</React.Fragment>
-					)}
-				</Paper>
-				{/* <Copyright /> */}
-			</Container>
-		</React.Fragment>
+									Thank you for submitting Application Form.
+								</Typography>
+								<Typography variant='subtitle1'>
+									Your registration no is #2001539. Please
+									remember your application Id, Your exam will
+									start on Date xyz. Best Of Luck.
+								</Typography>
+							</React.Fragment>
+						) : */ <React.Fragment>
+									{getStepContent(activeStep)}
+									<Box
+										sx={{
+											display: 'flex',
+											justifyContent: 'flex-end',
+										}}
+									>
+										{activeStep !== 0 && (
+											<Button
+												onClick={handleBack}
+												sx={{ mt: 3, ml: 1 }}
+											>
+												Back
+											</Button>
+										)}
+
+										<Button
+											variant='contained'
+											onClick={handleNext}
+											sx={{ mt: 3, ml: 1 }}
+										>
+											{activeStep === steps.length - 1
+												? 'Submit'
+												: 'Next'}
+										</Button>
+									</Box>
+								</React.Fragment>
+							)}
+						</Paper>
+						{/* <Copyright /> */}
+					</Container>
+				</React.Fragment>
+			)}
+		</>
 	);
 }

@@ -3,7 +3,6 @@ import Login from './components/Login/Login';
 import Landing from './components/Landing/Landing';
 import SignUp from './components/SignUp/SignUp';
 import ApplicationForm from './components/ApplicationForm/ApplicationForm';
-
 import ExamTimer from './components/ExamTimer/ExamTimer';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CreateExam from './components/CreateExam/CreateExam';
@@ -12,6 +11,7 @@ import ExamDetails from './components/ExamDetails/ExamDetails';
 import ExamEntryForm from './components/ExamSecurity/ExamSecurity';
 import ExamPage from './components/ExamPage/ExamPage';
 import StudentDashbboard from './components/StudentDashboard/StudentDashboard';
+import ViewApplicationForm from './components/ExamDetails/ViewApplicationForm';
 function App() {
 	const exams = Array.from({ length: 10 }, (_, index) => ({
 		examName: `Exam ${index + 1}`,
@@ -36,6 +36,10 @@ function App() {
 				<Route
 					path='/examdetails'
 					element={<ExamDetails />}
+				/>
+				<Route
+					path='/ViewApplicationForm'
+					element={<ViewApplicationForm />}
 				/>
 				<Route
 					path='/exam'
