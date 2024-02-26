@@ -306,6 +306,9 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import Loader from '../Loader/Loader';
 import { useNavigate } from 'react-router-dom';
+import Countdown from 'react-countdown';
+import Tooltip from '@mui/material/Tooltip';
+
 // import { useNavigation } from 'react-router-dom/'
 const columns = [
 	{ id: 'examName', label: 'Exam Name', align: 'center', minWidth: 170 },
@@ -381,10 +384,15 @@ export default function ParticipatedExams() {
 	const [exams, setExams] = React.useState([]);
 	const [participatedExams, setParticipatedExams] = React.useState([]);
 	const [isLoading, setIsLoading] = React.useState(true);
-	const handleRegistration = async (e) => {
+	const handleStartExam = async (e) => {
 		e.preventDefault();
 		setIsLoading(true);
-		Navigate('/examform', { state: { examId: e.currentTarget.id } });
+		Navigate(`/ExamSecurity`, {
+			state: {
+				examId: e.currentTarget.id.toString().split(' ')[0],
+				studentId: e.currentTarget.id.toString().split(' ')[1],
+			},
+		});
 		// console.log(e.currentTarget.id);
 	};
 	React.useEffect(() => {
@@ -418,9 +426,8 @@ export default function ParticipatedExams() {
 					response.data
 						.filter(
 							(e) =>
-								e.participants.includes(
-									localStorage.getItem('id')
-								) && new Date(e.testDateTime) > new Date()
+								e.participants.includes(localStorage.getItem('id')) &&
+								new Date(e.testDateTime) > new Date()
 						)
 						.map((e) => {
 							// console.log(e.participants.length);
@@ -498,47 +505,87 @@ export default function ParticipatedExams() {
 												minWidth: column.minWidth,
 											}}
 										>
-											{column.label != 'Apply' &&
-												column.label}
+											{column.label != 'Apply' && column.label}
 										</TableCell>
 									))}
 								</TableRow>
 							</TableHead>
 							<TableBody>
 								{participatedExams
-									.slice(
-										page * rowsPerPage,
-										page * rowsPerPage + rowsPerPage
-									)
+									.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 									.map((row) => {
+										console.log();
 										return (
 											<TableRow
-												hover
+												hoverrow
 												role='checkbox'
 												tabIndex={-1}
 												key={row._id}
 											>
 												{columns.map((column) => {
-													const value =
-														row[column.id];
+													// console.log(
+													// 	Date.now()  +
+													// 		(new Date(row.testDateTime) - new Date())
+													// );
+													const value = row[column.id];
 													return (
 														<TableCell
 															key={column.id}
 															align={column.align}
 														>
-															{column.id !=
-																'apply' &&
-																value}
-															{column.id ===
-																'apply' && (
-																<Button
-																	id={row._id}
-																	onClick={
-																		handleRegistration
+															{column.id != 'apply' && value}
+															{column.id === 'apply' && (
+																<Countdown
+																	date={
+																		Date.now() +
+																		(Date.parse(row.testDateTime) -
+																			new Date()) -
+																		15 * 60 * 1000
 																	}
-																>
-																	start exam
-																</Button>
+																	renderer={({
+																		days,
+																		hours,
+																		minutes,
+																		seconds,
+																		completed,
+																	}) => {
+																		// console.log(days);
+																		if (completed) {
+																			return (
+																				<Button
+																					id={`${
+																						row._id
+																					} ${localStorage.getItem('id')}`}
+																					onClick={handleStartExam}
+																				>
+																					start exam
+																				</Button>
+																			);
+																		} else {
+																			return (
+																				<Tooltip
+																					title={
+																						<div style={{ fontSize: 13 }}>
+																							time remaining until student can
+																							start exam
+																						</div>
+																					}
+																				>
+																					<span>
+																						<Button
+																							variant='contained'
+																							disabled
+																						>
+																							Days: {days} Hours: {hours + ' '}
+																							Minutes: {minutes} Seconds:{' '}
+																							{seconds}
+																						</Button>
+																					</span>
+																				</Tooltip>
+																			);
+																		}
+																	}}
+																></Countdown>
 															)}
 														</TableCell>
 													);

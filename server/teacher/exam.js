@@ -65,7 +65,9 @@ router.route('/:email').get(async (req, res) => {
 router.route('/:examId').put(upload.single('file'), async (req, res) => {
 	try {
 		const exam = req.body;
-		exam.file = req.file.filename;
+		if (req.file) {
+			exam.file = req.file.filename;
+		}
 		const oldExam = await Exam.findOneAndUpdate(
 			{ _id: req.params.examId },
 			exam,
@@ -101,14 +103,10 @@ router.route('/:id').delete(async (req, res) => {
 router.route('/download/:filename').get(async (req, res) => {
 	console.log(req.params.filename);
 	try {
-		const file = await gfs
-			.find({ filename: req.params.filename })
-			.toArray()[0];
+		const file = await gfs.find({ filename: req.params.filename }).toArray()[0];
 		res.setHeader('Content-disposition', 'attachment; filename=test.pdf');
 		res.set('Content-Type', 'application/pdf');
-		return await gfs
-			.openDownloadStreamByName(req.params.filename)
-			.pipe(res);
+		return await gfs.openDownloadStreamByName(req.params.filename).pipe(res);
 	} catch (error) {
 		console.error(error);
 		res.json({ message: 'Internal Server Error' });

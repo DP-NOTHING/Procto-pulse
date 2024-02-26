@@ -481,7 +481,7 @@ export default function PastExams() {
 										align='center'
 										colSpan={12}
 									>
-										<h3>Upcoming Exams</h3>
+										<h3>Past Exams</h3>
 									</TableCell>
 									{/* <TableCell
 										align='center'
