@@ -22,7 +22,7 @@ function App() {
 		<Router>
 			<Routes>
 				<Route
-					path='/exampage/:examid/:studentid'
+					path='/exampage'
 					element={<ExamPage />}
 				/>
 				<Route

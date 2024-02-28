@@ -8,8 +8,9 @@ const ExamEntryForm = ({ examDetails }) => {
 	const Navigate = useNavigate();
 	// console.log(examDetails);
 	const {
-		state: { examId, studentId },
+		state: { examId, studentId, exam },
 	} = useLocation();
+	// console.log(exam);
 	// console.log(examId, studentId);
 	// const initialTime = parseInt(localStorage.getItem('initialTime'));
 	// const [timeLeft, setTimeLeft] = useState(
@@ -35,7 +36,15 @@ const ExamEntryForm = ({ examDetails }) => {
 	const startExam = () => {
 		if (isChecked && isTimeout) {
 			// console.log('Starting the exam...');
-			Navigate(`/exampage/${examId}/${studentId}`);
+			document.documentElement.requestFullscreen();
+			Navigate(`/exampage`, {
+				state: {
+					examId,
+					studentId,
+					exam,
+					startTime: Date.now(),
+				},
+			});
 		} else if (!isChecked) {
 			alert('Please agree to the terms');
 		}
@@ -52,13 +61,19 @@ const ExamEntryForm = ({ examDetails }) => {
 		<div className='exam-entry-form-container'>
 			<div className='exam-entry-form'>
 				<h2>Lets get started</h2>
-				<p>
-					Time Left:
-					<Countdown
-						date={Date.now() + 10000}
-						onComplete={() => setIsTimeout(true)}
-					/>
-				</p>
+				{isTimeout || (
+					<p>
+						Time Left:
+						<Countdown
+							date={
+								Date.now() + 1000
+								/* (Date.parse(exam.testDateTime) - new Date()) @note need to do time changes
+								 */
+							}
+							onComplete={() => setIsTimeout(true)}
+						/>
+					</p>
+				)}
 				<div>
 					<p>Anti-cheating rules:</p>
 					<ol>
@@ -89,7 +104,7 @@ const ExamEntryForm = ({ examDetails }) => {
 				<br />
 				<Button
 					onClick={startExam}
-					disabled={!isTimeout}
+					disabled={!isTimeout || !isChecked}
 				>
 					Start Exam
 				</Button>

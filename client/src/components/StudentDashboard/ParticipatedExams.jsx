@@ -384,11 +384,13 @@ export default function ParticipatedExams() {
 	const [exams, setExams] = React.useState([]);
 	const [participatedExams, setParticipatedExams] = React.useState([]);
 	const [isLoading, setIsLoading] = React.useState(true);
-	const handleStartExam = async (e) => {
+	const handleStartExam = async (e, exam) => {
 		e.preventDefault();
 		setIsLoading(true);
+		// console.log(exam);
 		Navigate(`/ExamSecurity`, {
 			state: {
+				exam,
 				examId: e.currentTarget.id.toString().split(' ')[0],
 				studentId: e.currentTarget.id.toString().split(' ')[1],
 			},
@@ -537,10 +539,10 @@ export default function ParticipatedExams() {
 															{column.id === 'apply' && (
 																<Countdown
 																	date={
-																		Date.now() +
-																		(Date.parse(row.testDateTime) -
-																			new Date()) -
-																		15 * 60 * 1000
+																		Date.now() + 1000
+																		// (Date.parse(row.testDateTime) -
+																		// 	new Date()) -
+																		// 15 * 60 * 1000 @note need to do time changes
 																	}
 																	renderer={({
 																		days,
@@ -556,7 +558,9 @@ export default function ParticipatedExams() {
 																					id={`${
 																						row._id
 																					} ${localStorage.getItem('id')}`}
-																					onClick={handleStartExam}
+																					onClick={(e) =>
+																						handleStartExam(e, row)
+																					}
 																				>
 																					start exam
 																				</Button>
