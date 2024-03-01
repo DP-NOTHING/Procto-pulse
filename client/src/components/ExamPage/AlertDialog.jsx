@@ -6,19 +6,28 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function AlertDialog({ dialogContent, handler }) {
+export default function AlertDialog(props) {
+	const { dialogContent, handler, type } = props;
+	// if(props)
+	// console.log(props.handler);
+	const confirmSubmission = type == 'Confirm Submission';
 	const [open, setOpen] = React.useState(true);
 	// const handleClickOpen = () => {
 	// 	setOpen(true);
 	// };
+	const handleYes = () => {
+		handler(true);
+		setOpen(false);
+	};
 	const handleClose = () => {
-		document.documentElement.requestFullscreen();
+		if (!confirmSubmission) document.documentElement.requestFullscreen();
 		setOpen(false);
 		handler(null);
 	};
 	const beep =
 		'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
-	new Audio(beep).play();
+	// console.log(confirmSubmission);
+	if (!confirmSubmission) new Audio(beep).play();
 	return (
 		<>
 			{/* <Button
@@ -33,7 +42,7 @@ export default function AlertDialog({ dialogContent, handler }) {
 				aria-labelledby='alert-dialog-title'
 				aria-describedby='alert-dialog-description'
 			>
-				<DialogTitle id='alert-dialog-title'>{'Warning'}</DialogTitle>
+				<DialogTitle id='alert-dialog-title'>{type}</DialogTitle>
 				<DialogContent>
 					<DialogContentText id='alert-dialog-description'>
 						{dialogContent}
@@ -41,12 +50,21 @@ export default function AlertDialog({ dialogContent, handler }) {
 				</DialogContent>
 				<DialogActions>
 					{/* <Button onClick={handleClose}>Disagree</Button> */}
-					<Button
-						onClick={handleClose}
-						autoFocus
-					>
-						Okay
-					</Button>
+					{!confirmSubmission && (
+						<Button
+							onClick={handleClose}
+							autoFocus
+						>
+							Okay
+						</Button>
+					)}
+					{confirmSubmission && (
+						<>
+							{' '}
+							<Button onClick={handleYes}>Yes</Button>
+							<Button onClick={handleClose}>No</Button>{' '}
+						</>
+					)}
 				</DialogActions>
 			</Dialog>
 		</>

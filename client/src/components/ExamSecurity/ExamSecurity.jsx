@@ -16,7 +16,7 @@ const ExamEntryForm = ({ examDetails }) => {
 	// const [timeLeft, setTimeLeft] = useState(
 	// 	initialTime ? 180 - Math.floor((Date.now() - initialTime) / 1000) : 180
 	// );
-	const [isChecked, setIsChecked] = useState(false);
+	const [isChecked, setIsChecked] = useState(true); //@note initially false
 	const [isTimeout, setIsTimeout] = useState(false);
 	// useEffect(() => {
 	// 	const timer = setInterval(() => {
@@ -36,7 +36,7 @@ const ExamEntryForm = ({ examDetails }) => {
 	const startExam = () => {
 		if (isChecked && isTimeout) {
 			// console.log('Starting the exam...');
-			document.documentElement.requestFullscreen();
+			// document.documentElement.requestFullscreen(); //@note uncomment this
 			Navigate(`/exampage`, {
 				state: {
 					examId,

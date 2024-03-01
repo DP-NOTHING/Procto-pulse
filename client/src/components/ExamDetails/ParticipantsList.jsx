@@ -28,6 +28,13 @@ const columns = [
 		align: 'center',
 		format: (value) => value.toLocaleString('en-US'),
 	},
+	{
+		id: 'viewResponse',
+		label: 'View Response',
+		minWidth: 170,
+		align: 'center',
+		format: (value) => value.toLocaleString('en-US'),
+	},
 ];
 export default function ParticipantsList({ data, examId }) {
 	// console.log(data[0]);
@@ -47,6 +54,15 @@ export default function ParticipantsList({ data, examId }) {
 	const handleViewApplication = async (e) => {
 		e.preventDefault();
 		Navigate('/ViewApplicationForm', {
+			state: {
+				examId: e.currentTarget.id.toString().split(' ')[0],
+				studentId: e.currentTarget.id.toString().split(' ')[1],
+			},
+		});
+	};
+	const handleViewResponse = async (e) => {
+		e.preventDefault();
+		Navigate('/ViewResponse', {
 			state: {
 				examId: e.currentTarget.id.toString().split(' ')[0],
 				studentId: e.currentTarget.id.toString().split(' ')[1],
@@ -81,6 +97,7 @@ export default function ParticipantsList({ data, examId }) {
 									}}
 								>
 									{column.id != 'viewApplication' &&
+										column.id != 'viewResponse' &&
 										column.label}
 								</TableCell>
 							))}
@@ -88,12 +105,9 @@ export default function ParticipantsList({ data, examId }) {
 					</TableHead>
 					<TableBody>
 						{data
-							.slice(
-								page * rowsPerPage,
-								page * rowsPerPage + rowsPerPage
-							)
+							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 							.map((row) => {
-								console.log(row);
+								// console.log(row);
 								return (
 									<TableRow
 										hover
@@ -109,23 +123,19 @@ export default function ParticipantsList({ data, examId }) {
 													align={column.align}
 													style={{ fontSize: '15px' }}
 												>
-													{column.id !=
-														'viewApplication' &&
-														value}
-													{column.id ==
-														'viewApplication' && (
+													{column.id != 'viewApplication' && value}
+													{(column.id == 'viewApplication' ||
+														column.id == 'viewResponse') && (
 														<Button
 															variant='outlined'
-															id={
-																row.examId +
-																' ' +
-																row.studentId
-															}
+															id={row.examId + ' ' + row.studentId}
 															onClick={
-																handleViewApplication
+																column.id == 'viewApplication'
+																	? handleViewApplication
+																	: handleViewResponse
 															}
 														>
-															View Application
+															{column.label}
 														</Button>
 													)}
 												</TableCell>

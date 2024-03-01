@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Bar from './Bar';
+import Drawer from './Drawer.jsx';
 import Webcam from 'react-webcam';
 import axios from 'axios';
 import { useLocation, useSearchParams } from 'react-router-dom';
@@ -12,8 +12,11 @@ import { Stack } from '@mui/material';
 import Loader from '../Loader/Loader.jsx';
 import CircularProgress from '@mui/material/CircularProgress';
 import AlertDialog from './AlertDialog.jsx';
+import ResponseArea from './ResponseArea.jsx';
+import QuestionPaper from './QuestionPaper.jsx';
 
 export default function ExamPage() {
+	const [showResponse, setShowResponse] = useState(false);
 	const {
 		state: { examId, studentId, exam, startTime },
 	} = useLocation();
@@ -165,95 +168,15 @@ export default function ExamPage() {
 	// setTimeout(() => {
 	//   setCam(true);
 	// }, 3000);
-	function QuestionPaper() {
-		pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-		const [numPages, setNumPages] = useState(null);
-		const [pageNumber, setPageNumber] = useState(1);
-		const [progress, setProgress] = useState(0);
-		/*To Prevent right click on screen*/
-		document.addEventListener('contextmenu', (event) => {
-			event.preventDefault();
-		});
 
-		/*When document gets loaded successfully*/
-		function onDocumentLoadSuccess({ numPages }) {
-			setNumPages(numPages);
-			setPageNumber(1);
-		}
-
-		// function changePage(offset) {
-		// 	setPageNumber((prevPageNumber) => prevPageNumber + offset);
-		// }
-		function changePageNumber(e, n) {
-			setPageNumber(n);
-		}
-		// function previousPage() {
-		// 	changePage(-1);
-		// }
-
-		// function nextPage() {
-		// 	changePage(1);
-		// }
-
-		return (
-			<Stack
-				spacing={2}
-				alignItems='center'
-			>
-				<Document
-					loading={<Loader />}
-					file={`${process.env.REACT_APP_BACKEND}/exam/download/${exam.file}`}
-					onLoadSuccess={onDocumentLoadSuccess}
-				>
-					<Page
-						loading={<Loader />}
-						pageNumber={pageNumber}
-					/>
-				</Document>
-				{numPages && (
-					<Pagination
-						count={numPages}
-						boundaryCount={0}
-						variant='outlined'
-						color='primary'
-						size='large'
-						siblingCount={1}
-						onChange={changePageNumber}
-						showFirstButton
-						showLastButton
-					/>
-				)}
-				{/* <div>
-						<div>
-							Page {pageNumber || (numPages ? 1 : '--')} of {numPages || '--'}
-						</div>
-						<div>
-							<button
-								type='button'
-								disabled={pageNumber <= 1}
-								onClick={previousPage}
-								className='Pre'
-							>
-								Previous
-							</button>
-							<button
-								type='button'
-								disabled={pageNumber >= numPages}
-								onClick={nextPage}
-							>
-								Next
-							</button>
-						</div>
-					</div> */}
-			</Stack>
-		);
-	}
 	useRestrictCopyPaste({ window, actions: ['copy', 'cut', 'paste', 'select'] });
 	return (
 		<>
-			<Bar
+			<Drawer
 				startTime={startTime}
 				exam={exam}
+				showResponse={showResponse}
+				setShowResponse={setShowResponse}
 			/>
 			{/* <Webcam 
         width={0}
@@ -273,16 +196,37 @@ export default function ExamPage() {
 			) : (
 				''
 			)}
-			<button onClick={capture}>Capture photo</button>
+			{/* <button onClick={capture}>Capture photo</button>
 			{imgSrc && <img src={imgSrc} />}
-			<button onClick={camswitch}>switch</button>
-			<QuestionPaper />
-			{dialog && (
+			<button onClick={camswitch}>switch</button> */}
+			{/* <Stack>
+				<QuestionPaper
+					exam={exam}
+					show={!showResponse}
+				/>
+				{dialog && (
+					<AlertDialog
+						dialogContent={dialog}
+						handler={setDialog}
+					/>
+				)} */}
+			{/* <ResponseArea show={showResponse} /> */}
+			{/* <button
+					onClick={() => {
+						setShowResponse(!showResponse);
+					}}
+				>
+					toggle
+				</button> */}
+			{/* </Stack> */}
+			{/* @note uncomment this */}
+			{/* {dialog && (
 				<AlertDialog
+				type={'Warning'}
 					dialogContent={dialog}
 					handler={setDialog}
 				/>
-			)}
+				)} */}
 		</>
 	);
 }

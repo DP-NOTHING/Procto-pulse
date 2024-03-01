@@ -133,10 +133,16 @@ const examSchema = new mongoose.Schema({
 	},
 	participants: { type: [mongoose.Schema.Types.ObjectId] },
 });
-
+const responsesSchema = new mongoose.Schema({
+	examId: { type: String },
+	studentId: { type: String },
+	response: { type: String },
+	score: { type: String },
+});
+const Responses = mongoose.model('Responses', responsesSchema);
 const Exam = mongoose.model('Exam', examSchema);
 const Applicationform = mongoose.model(
 	'Applicationform',
 	ApplicationFormSchema
 );
-module.exports = { Exam, User, Applicationform };
+module.exports = { Exam, User, Applicationform, Responses };

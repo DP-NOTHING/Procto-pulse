@@ -18,13 +18,13 @@ const exam = require('./teacher/exam').router;
 const applicationformRouter =
 	require('./applicationform/applicationform').router;
 const studentRouter = require('./student/student').router;
-
+const responsesRouter = require('./responses/responses').router;
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/logout', logoutRouter);
 app.use('/applicationform', applicationformRouter);
-app.use('/student',studentRouter);
-
+app.use('/student', studentRouter);
+app.use('/exam-response', responsesRouter);
 // app.post('/applicationform/', async (req, res) => {
 // 	res.json({ success: true });
 // });

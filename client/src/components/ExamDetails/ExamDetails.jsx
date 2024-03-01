@@ -29,10 +29,10 @@ const ExamDetails = () => {
 	const Navigate = useNavigate();
 	// console.log(state);
 	const [isLoading, setIsLoading] = useState(false);
-	const examID = state.examId;
+	const examId = state.examId;
 	// if(state=)
-	// const { id: examID } = useParams();
-	// console.log(examID);
+	// const { id: examId } = useParams();
+	// console.log(examId);
 	const downloadPaper = async (e) => {
 		try {
 			e.preventDefault();
@@ -56,11 +56,11 @@ const ExamDetails = () => {
 		}
 	};
 	useEffect(() => {
-		const fetchExamDetails = async (examID) => {
-			// console.log(`${process.env.REACT_APP_BACKEND}/exam/${examID}`);
+		const fetchExamDetails = async (examId) => {
+			// console.log(`${process.env.REACT_APP_BACKEND}/exam/${examId}`);
 			try {
 				const res = await axios.get(
-					`${process.env.REACT_APP_BACKEND}/applicationform/get-exam-details/${examID}`
+					`${process.env.REACT_APP_BACKEND}/applicationform/get-exam-details/${examId}`
 				);
 				// console.log(res.data);
 				/* {
@@ -80,7 +80,7 @@ const ExamDetails = () => {
 			}
 		};
 		setIsLoading(true);
-		fetchExamDetails(examID)
+		fetchExamDetails(examId)
 			.then((res) => {
 				// console.log(res);
 				setDetails(res.exam);
@@ -114,16 +114,11 @@ const ExamDetails = () => {
 							</Button>
 						</ListItem>
 						<ListItem>Exam Name: {details.examName}</ListItem>
+						<ListItem>Number Of Questions: {details.noOfQuestions}</ListItem>
 						<ListItem>
-							Number Of Questions: {details.noOfQuestions}
+							Exam Time: {new Date(details.testDateTime).toLocaleString()}
 						</ListItem>
-						<ListItem>
-							Exam Time:{' '}
-							{new Date(details.testDateTime).toLocaleString()}
-						</ListItem>
-						<ListItem>
-							Test Duration (in Hours): {details.testTime}
-						</ListItem>
+						<ListItem>Test Duration (in Hours): {details.testTime}</ListItem>
 						<ListItem>
 							<Button
 								variant='contained'

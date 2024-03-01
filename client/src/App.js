@@ -12,6 +12,8 @@ import ExamEntryForm from './components/ExamSecurity/ExamSecurity';
 import ExamPage from './components/ExamPage/ExamPage';
 import StudentDashbboard from './components/StudentDashboard/StudentDashboard';
 import ViewApplicationForm from './components/ExamDetails/ViewApplicationForm';
+import ResponseSubmission from './components/ResponseSubmission/ResponseSubmission';
+import ViewResponse from './components/ExamDetails/ViewResponse.jsx';
 function App() {
 	const exams = Array.from({ length: 10 }, (_, index) => ({
 		examName: `Exam ${index + 1}`,
@@ -42,6 +44,10 @@ function App() {
 					element={<ViewApplicationForm />}
 				/>
 				<Route
+					path='/ViewResponse'
+					element={<ViewResponse />}
+				/>
+				<Route
 					path='/exam'
 					element={<ExamTimer exams={exams} />}
 				/>
@@ -64,6 +70,10 @@ function App() {
 				<Route
 					path='/ExamSecurity'
 					element={<ExamEntryForm />}
+				/>
+				<Route
+					path='/submit-response'
+					element={<ResponseSubmission />}
 				/>
 				<Route
 					path='/*'
