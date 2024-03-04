@@ -275,6 +275,14 @@ export default function TeacherDashboard() {
 										// 	onClickCapture={deleteExam}
 										// 	id={`${exam._id.toString()}`}
 										// >
+										<>
+										<Button
+												id={`${exam._id.toString()}`}
+												onClick={handleExamDetails}
+											>
+												details
+											</Button>
+										
 										<IconButton
 											id={`${exam._id.toString()}`}
 											edge='end'
@@ -288,7 +296,7 @@ export default function TeacherDashboard() {
 										>
 											<DeleteIcon />
 										</IconButton>
-										// </div>
+										</>
 									}
 								>
 									<ListItemButton sx={{ p: 2 }}>

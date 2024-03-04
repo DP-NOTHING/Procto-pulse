@@ -106,7 +106,7 @@ export default function Bar(props) {
 		onClick: () => setSelectedIndex(value),
 	});
 	const [dialog, setDialog] = React.useState(null);
-	const { window, startTime, exam, setShowResponse, showResponse } = props;
+	const { window, startTime, exam, setShowResponse, showResponse , multiplePerson , zeroPerson , differentPerson } = props;
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const [isClosing, setIsClosing] = React.useState(false);
 	const handleDrawerClose = () => {
@@ -133,6 +133,9 @@ export default function Bar(props) {
 					response: localStorage.getItem('content'),
 					examId,
 					studentId,
+					multiplePerson,
+					differentPerson,
+					zeroPerson
 				})
 				.then((res) => {
 					// console.log(res.data);

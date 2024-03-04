@@ -138,6 +138,9 @@ const responsesSchema = new mongoose.Schema({
 	studentId: { type: String },
 	response: { type: String },
 	score: { type: String },
+	multiplePerson:{type:Number},
+	differentPerson:{type:Number},
+	zeroPerson:{type:Number},
 });
 const Responses = mongoose.model('Responses', responsesSchema);
 const Exam = mongoose.model('Exam', examSchema);

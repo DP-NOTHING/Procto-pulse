@@ -14,6 +14,9 @@ export default () => {
 	const [response, setResponse] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [dialog, setDialog] = useState(null);
+	const [multiplePerson, setMultiplePerson] = useState(0);
+	const [differentPerson, setDifferentPerson] = useState(0);
+	const [zeroPerson, setZeroPerson] = useState(0);
 	const {
 		state: { studentId, examId },
 	} = useLocation();
@@ -40,6 +43,14 @@ export default () => {
 	};
 	// console.log(studentId, examId);
 	useEffect(() => {
+		axios
+			.get(`${process.env.REACT_APP_BACKEND}/exam-response/getall`, {
+				params: { studentId, examId },
+			}).then((res)=>{
+				setDifferentPerson(res.data.differentPerson);
+				setMultiplePerson(res.data.multiplePerson);
+				setZeroPerson(res.data.zeroPerson);
+			})
 		axios
 			.get(`${process.env.REACT_APP_BACKEND}/exam-response`, {
 				params: { studentId, examId },
@@ -127,6 +138,10 @@ export default () => {
 						show={true}
 						response={response}
 					/>
+					<h1>Warnings:</h1>
+					<h2>differentPersons : {differentPerson}</h2>
+					<h2>zeroPerson : {zeroPerson}</h2>
+					<h2>multiplePerson : {multiplePerson}</h2>
 					{dialog && (
 						<AlertDialog
 							type='Confirm Submission'
