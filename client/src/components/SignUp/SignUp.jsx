@@ -19,8 +19,8 @@ import InputLabel from '@mui/material/InputLabel';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Radio from '@mui/material/Radio';
-import { FormLabel } from '@mui/material';
-import { deepPurple, deepOrange } from '@mui/material/colors';
+import { FormLabel, Paper } from '@mui/material';
+import { deepPurple, deepOrange, grey, orange, blue } from '@mui/material/colors';
 import Loader from '../Loader/Loader';
 import axios from 'axios';
 
@@ -79,37 +79,76 @@ export default function SignUp() {
 			{isLoading && <Loader />}
 			{isLoading || (
 				<ThemeProvider theme={defaultTheme}>
-					<Container
-						component='main'
-						maxWidth='xs'
+				<Grid
+					container
+					component='main'
+					justifyContent='center'
+					sx={{ height: '100vh' }}
+				>
+					<CssBaseline />
+					<Grid
+						container
+						xs={false}
+						sm={4}
+						md={7}
+						direction={'column'}
+						justifyContent='center'
+						alignItems='center' // Add this line to center the content vertically
+						display='flex'
+						sx={
+							{
+								// backgroundRepeat: 'no-repeat',
+								backgroundColor: orange[50],
+								// backgroundSize: 'cover',
+								// backgroundPosition: 'center',
+							}
+						}
 					>
-						<CssBaseline />
+						<Grid
+						item>
+						<img
+							src='/assets/Eye.png'
+							alt='gif'
+						/></Grid>
+						<Grid item>
+						<Typography
+					variant='h6'
+					noWrap
+					href='#app-bar-with-responsive-menu'
+					sx={{
+						mr: 2,
+						display: { xs: 'none', md: 'flex' },
+						fontFamily: 'monospace',
+						fontWeight: 700,
+						letterSpacing: '.3rem',
+						color: 'inherit',
+						textDecoration: 'none',
+						fontSize:'3rem',
+					}}
+				>
+					Procto PuLsE
+				</Typography>
+				</Grid>
+					</Grid>
+						<Grid
+							item
+							xs={12}
+							sm={8}
+							md={5}
+							component={Paper}
+							elevation={6}
+							square
+						>
 						<Box
 							sx={{
-								marginTop: 8,
+								my: 8,
+									mx: 4,
 								display: 'flex',
 								flexDirection: 'column',
 								alignItems: 'center',
 							}}
 						>
-							<img src='/assets/Eye.png' style={{width:45}} />
-								<Typography
-						variant='h6'
-						noWrap
-						component='a'
-						href='#app-bar-with-responsive-menu'
-						sx={{
-							mr: 2,
-							display: { xs: 'none', md: 'flex' },
-							fontFamily: 'monospace',
-							fontWeight: 700,
-							letterSpacing: '.3rem',
-							color: 'inherit',
-							textDecoration: 'none',
-						}}
-					>
-						Procto PuLsE
-					</Typography>
+							
 							<Typography
 								component='h1'
 								variant='h5'
@@ -136,6 +175,7 @@ export default function SignUp() {
 											name='firstname'
 											required
 											fullWidth
+											color='secondary'
 											id='firstname'
 											label='First Name'
 											autoFocus
@@ -152,6 +192,7 @@ export default function SignUp() {
 											required
 											fullWidth
 											id='lastname'
+											color='secondary'
 											label='Last Name'
 											name='lastname'
 											autoComplete='family-name'
@@ -166,6 +207,7 @@ export default function SignUp() {
 										<TextField
 											required
 											fullWidth
+											color='secondary'
 											id='email'
 											label='Email Address'
 											name='email'
@@ -181,6 +223,7 @@ export default function SignUp() {
 										<TextField
 											required
 											fullWidth
+											color='secondary'
 											name='password'
 											label='Password'
 											type='password'
@@ -204,9 +247,9 @@ export default function SignUp() {
 												'& .MuiSvgIcon-root': {
 													fontSize: 28,
 												},
-												color: deepOrange[800],
+												color: blue[300],
 												'&.Mui-checked': {
-													color: deepOrange[600],
+													color: deepPurple[900],
 												},
 											}}
 										/>
@@ -228,15 +271,18 @@ export default function SignUp() {
 											}}
 										/>
 										<br />
-										<FormControlLabel
+										{/* <FormControlLabel
 											control={
 												<Checkbox
 													value='allowExtraEmails'
 													color='primary'
+													style ={{
+														color: "black"
+													}}
 												/>
 											}
 											label='I want to receive inspiration, marketing promotions and updates via email.'
-										/>
+										/> */}
 									</Grid>
 								</Grid>
 								<Button
@@ -244,7 +290,7 @@ export default function SignUp() {
 									fullWidth
 									variant='contained'
 									onClick={handleSubmit}
-									sx={{ mt: 3, mb: 2 }}
+									sx={{ mt: 3, mb: 2 ,backgroundColor: grey[900]}}
 								>
 									Sign Up
 								</Button>
@@ -257,8 +303,9 @@ export default function SignUp() {
 										onClick={() => navigate('/login')}
 									>
 										<Link
-											href='#'
+											href=''
 											variant='body2'
+											sx={{ color: 'black' }}
 										>
 											Already have an account? Sign in
 										</Link>
@@ -266,7 +313,8 @@ export default function SignUp() {
 								</Grid>
 							</Box>
 						</Box>
-					</Container>
+						</Grid>
+					</Grid>
 				</ThemeProvider>
 			)}
 		</>

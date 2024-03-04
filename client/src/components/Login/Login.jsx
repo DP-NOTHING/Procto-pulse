@@ -1,46 +1,23 @@
 // import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
+import { FormLabel } from '@mui/material';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { blue, deepPurple, grey, orange } from '@mui/material/colors';
+import CssBaseline from '@mui/material/CssBaseline';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
-import gif from '../../images/Exams.gif';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { deepPurple, deepOrange } from '@mui/material/colors';
 import Radio from '@mui/material/Radio';
-import { FormLabel } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 
-function Copyright(props) {
-	return (
-		<Typography
-			variant='body2'
-			color='text.secondary'
-			align='center'
-			{...props}
-		>
-			{'Copyright © '}
-			<Link
-				color='inherit'
-				href='https://mui.com/'
-			>
-				Your Website
-			</Link>{' '}
-			{new Date().getFullYear()}
-			{'.'}
-		</Typography>
-	);
-}
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -125,27 +102,48 @@ export default function Login() {
 					>
 						<CssBaseline />
 						<Grid
-							item
+							container
 							xs={false}
 							sm={4}
 							md={7}
+							direction={'column'}
 							justifyContent='center'
 							alignItems='center' // Add this line to center the content vertically
 							display='flex'
 							sx={
 								{
 									// backgroundRepeat: 'no-repeat',
-									// backgroundColor: (t) =>
-									//   t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+									backgroundColor: orange[50],
 									// backgroundSize: 'cover',
 									// backgroundPosition: 'center',
 								}
 							}
 						>
+							<Grid
+							item>
 							<img
-								src={gif}
+								src='/assets/Eye.png'
 								alt='gif'
-							/>
+							/></Grid>
+							<Grid item>
+							<Typography
+						variant='h6'
+						noWrap
+						href='#app-bar-with-responsive-menu'
+						sx={{
+							mr: 2,
+							display: { xs: 'none', md: 'flex' },
+							fontFamily: 'monospace',
+							fontWeight: 700,
+							letterSpacing: '.3rem',
+							color: 'inherit',
+							textDecoration: 'none',
+							fontSize:'3rem',
+						}}
+					>
+						Procto PuLsE
+					</Typography>
+					</Grid>
 						</Grid>
 						<Grid
 							item
@@ -164,27 +162,7 @@ export default function Login() {
 									flexDirection: 'column',
 									alignItems: 'center',
 								}}
-							>
-								<img src='/assets/Eye.png' style={{width:45}} />
-								<Typography
-						variant='h6'
-						noWrap
-						component='a'
-						href='#app-bar-with-responsive-menu'
-						sx={{
-							mr: 2,
-							display: { xs: 'none', md: 'flex' },
-							fontFamily: 'monospace',
-							fontWeight: 700,
-							letterSpacing: '.3rem',
-							color: 'inherit',
-							textDecoration: 'none',
-						}}
-					>
-						Procto PuLsE
-					</Typography>
-
-					
+							>				
 								<Typography
 									component='h1'
 									variant='h5'
@@ -205,6 +183,7 @@ export default function Login() {
 										label='Email Address'
 										name='email'
 										value={email}
+										color='secondary'
 										onChange={(e) =>
 											setEmail(e.target.value)
 										}
@@ -219,6 +198,7 @@ export default function Login() {
 										label='Password'
 										type='password'
 										id='password'
+										color='secondary'
 										value={password}
 										onChange={(e) =>
 											setPassword(e.target.value)
@@ -237,9 +217,9 @@ export default function Login() {
 											'& .MuiSvgIcon-root': {
 												fontSize: 28,
 											},
-											color: deepOrange[800],
+											color: blue[300],
 											'&.Mui-checked': {
-												color: deepOrange[600],
+												color: deepPurple[900],
 											},
 										}}
 									/>
@@ -254,7 +234,7 @@ export default function Login() {
 											'& .MuiSvgIcon-root': {
 												fontSize: 28,
 											},
-											color: deepPurple[800],
+											color: deepPurple[700],
 											'&.Mui-checked': {
 												color: deepPurple[600],
 											},
@@ -267,6 +247,9 @@ export default function Login() {
 											<Checkbox
 												value='remember'
 												color='primary'
+												style ={{
+													color: "black"
+												}}
 											/>
 										}
 										label='Remember me'
@@ -275,13 +258,13 @@ export default function Login() {
 										type='submit'
 										fullWidth
 										variant='contained'
-										sx={{ mt: 3, mb: 2 }}
+										sx={{ mt: 3, mb: 2 ,backgroundColor: grey[900]}}
 										onClick={handleSubmit}
 									>
 										Sign In
 									</Button>
 									<Grid container>
-										<Grid
+										{/* <Grid
 											item
 											xs
 										>
@@ -291,7 +274,7 @@ export default function Login() {
 											>
 												Forgot password?
 											</Link>
-										</Grid>
+										</Grid> */}
 										<Grid
 											item
 											onClick={() => {
@@ -299,8 +282,8 @@ export default function Login() {
 											}}
 										>
 											<Link
-												href='#'
 												variant='body2'
+												sx={{ color: 'black' }}
 											>
 												{
 													"Don't have an account? Sign Up"
@@ -308,7 +291,7 @@ export default function Login() {
 											</Link>
 										</Grid>
 									</Grid>
-									<Copyright sx={{ mt: 5 }} />
+									
 								</Box>
 							</Box>
 						</Grid>

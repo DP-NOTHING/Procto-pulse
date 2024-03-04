@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Button } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,10 +7,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Button, Typography } from '@mui/material';
-import axios from 'axios';
+import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavBar from '../Landing/NavBar';
 const columns = [
 	{ id: 'firstname', label: 'First Name', align: 'center', minWidth: 170 },
 	{ id: 'lastname', label: 'Last Name', align: 'center', minWidth: 100 },

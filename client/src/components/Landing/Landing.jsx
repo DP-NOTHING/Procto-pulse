@@ -1,51 +1,20 @@
-import * as React from 'react';
-import NavBar from './NavBar';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import AppBar from '@mui/material/AppBar';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
-import { ListItem } from '@mui/material';
-import Paper from '@mui/material/Paper';
-// import { CssBaseline } from '@material-ui/core';
-import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Landing.css';
-const Item = styled(Paper)(({ theme, textAlign }) => ({
-	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-	...theme.typography.body2,
-	padding: theme.spacing(1),
-	textAlign,
-	color: theme.palette.text.secondary,
-}));
+import NavBar from './NavBar';
 
 export default function Landing() {
-	// const handleSubmit = (event) => {
-	// 	event.preventDefault();
-	// 	const data = new FormData(event.currentTarget);
-	// 	console.log({
-	// 		email: data.get('email'),
-	// 		password: data.get('password'),
-	// 	});
-	// };
+
 	const navigate = useNavigate();
 	return (
-		<>
-			{/* <CssBaseline /> */}
+		<div>
+			
 			<NavBar />
 			<Stack gap={5}>
 				<Stack
-					// display='flex'
 					spacing={2}
 					alignItems='center'
 				>
@@ -66,7 +35,7 @@ export default function Landing() {
 								style={{ padding: '20%' }}
 							>
 								<Grid
-									item
+									itemP
 									sm={12}
 									xs={12}
 								>
@@ -257,7 +226,7 @@ export default function Landing() {
 					</Grid>
 				</Stack>
 			</Stack>
-		</>
+		</div>
 	);
 	// return (
 	// 	<>
