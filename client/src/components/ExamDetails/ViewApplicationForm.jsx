@@ -145,6 +145,7 @@ import { Avatar, List, ListItem } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import NavBar from '../Landing/NavBar';
 const bull = (
 	<Box
 		component='span'
@@ -220,6 +221,7 @@ export default function ViewApplicationForm() {
 	}, []);
 	return (
 		<>
+			<NavBar />
 			{!isLoading && (
 				<div
 					style={{

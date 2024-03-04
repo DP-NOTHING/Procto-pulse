@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import { blue, red } from '@mui/material/colors';
 import { Button } from '@mui/material';
-
+import NavBar from '../Landing/NavBar'
 export default function TeacherDashboard() {
 	// useEffect(())
 	const [isLoading, setIsLoading] = useState(true);
@@ -87,6 +87,7 @@ export default function TeacherDashboard() {
 	}, []);
 	return (
 		<>
+			<NavBar />
 			{isLoading && <Loader />}
 			{isLoading || (
 				<Box sx={{ width: '100%', maxWidth: 'fit' }}>

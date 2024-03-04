@@ -50,15 +50,17 @@ function ResponsiveAppBar() {
 					/> */}
 					<Box
 						component='img'
-						sx={{ height: 54 }}
+						sx={{ height: 45,paddingRight:2 }}
 						alt='Logo'
-						src={'/assets/pulse3.png'}
+						src={'/assets/Eye.png'}
 					/>
+					
+					{/* <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Eye.png" alt="Eye" width="25" height="25" /> */}
 					<Typography
 						variant='h6'
 						noWrap
 						component='a'
-						href='#app-bar-with-responsive-menu'
+						href='/'
 						sx={{
 							mr: 2,
 							display: { xs: 'none', md: 'flex' },
@@ -233,7 +235,7 @@ function ResponsiveAppBar() {
 						</Link>
 						<Link
 							style={{ all: 'unset' }}
-							to={localStorage.getItem('role')=='teacher' ? '/teacherDashboard' : '/exam'}
+							to={localStorage.getItem('role')=='teacher' ? '/teacher-dashboard' : '/student-dashboard'}
 						>
 							<Button
 								key={'dashboard'}

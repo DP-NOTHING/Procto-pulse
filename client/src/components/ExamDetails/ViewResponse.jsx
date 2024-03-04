@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button, Paper } from '@mui/material';
 import AlertDialog from '../ExamPage/AlertDialog.jsx';
-
+import NavBar from '../Landing/NavBar';
 export default () => {
 	const Navigate = useNavigate();
 	const [score, setScore] = useState('');
@@ -129,7 +129,8 @@ export default () => {
 		);
 	}
 	return (
-		<>
+		<>	
+			<NavBar />
 			{isLoading && <Loader />}
 			{!isLoading && (
 				<>

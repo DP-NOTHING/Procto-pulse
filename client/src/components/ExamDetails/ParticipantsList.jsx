@@ -10,7 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import { Button, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import NavBar from '../Landing/NavBar';
 const columns = [
 	{ id: 'firstname', label: 'First Name', align: 'center', minWidth: 170 },
 	{ id: 'lastname', label: 'Last Name', align: 'center', minWidth: 100 },
@@ -71,6 +71,7 @@ export default function ParticipantsList({ data, examId }) {
 	};
 
 	return (
+		<>
 		<Paper sx={{ width: '100%', overflow: 'hidden' }}>
 			<TableContainer sx={{ maxHeight: 440 }}>
 				<Table
@@ -157,5 +158,6 @@ export default function ParticipantsList({ data, examId }) {
 				onRowsPerPageChange={handleChangeRowsPerPage}
 			/>
 		</Paper>
+		</>
 	);
 }

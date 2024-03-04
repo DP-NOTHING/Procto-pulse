@@ -21,6 +21,7 @@ import { blue, red } from '@mui/material/colors';
 import { Button } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import ParticipantsList from './ParticipantsList';
+import NavBar from '../Landing/NavBar'
 const ExamDetails = () => {
 	// const
 	const [details, setDetails] = useState({});
@@ -91,6 +92,7 @@ const ExamDetails = () => {
 	}, []);
 	return (
 		<>
+			<NavBar />
 			{isLoading && <Loader />}
 			{!isLoading && (
 				<Box sx={{ width: '100%', maxWidth: 'fit' }}>

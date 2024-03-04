@@ -18,6 +18,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
+import NavBar from '../Landing/NavBar';
 function Copyright() {
 	return (
 		<Typography
@@ -151,6 +152,7 @@ export default function ApplicationForm() {
 
 	return (
 		<>
+			<NavBar />
 			{isLoading && <Loader />}
 			{!isLoading && (
 				<React.Fragment>

@@ -4,7 +4,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CreateExam.css';
 import Loader from '../Loader/Loader';
-
+import NavBar from '../Landing/NavBar';
 const CreateExam = () => {
 	const { state } = useLocation();
 	const Navigate = useNavigate();
@@ -160,6 +160,7 @@ const CreateExam = () => {
 
 	return (
 		<>
+			<NavBar />
 			{isLoading && <Loader />}
 			{isLoading || (
 				<div className='teacher-dashboard'>

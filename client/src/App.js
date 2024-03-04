@@ -48,10 +48,6 @@ function App() {
 					element={<ViewResponse />}
 				/>
 				<Route
-					path='/exam'
-					element={<ExamTimer exams={exams} />}
-				/>
-				<Route
 					path='/create-exam'
 					element={<CreateExam />}
 				/>

@@ -308,6 +308,7 @@ import Loader from '../Loader/Loader';
 import { useNavigate } from 'react-router-dom';
 import ParticipatedExams from './ParticipatedExams';
 import PastExams from './PastExams';
+import NavBar from '../Landing/NavBar'
 
 // import { useNavigation } from 'react-router-dom/'
 const columns = [
@@ -488,6 +489,7 @@ export default function StudentDashboards() {
 
 	return (
 		<>
+			<NavBar />
 			{isLoading && <Loader />}
 			{!isLoading && (
 				<>

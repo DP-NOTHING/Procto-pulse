@@ -255,6 +255,23 @@ export default function Bar(props) {
 					>
 						<MenuIcon />
 					</IconButton> */}
+								<Typography
+						variant='h6'
+						noWrap
+						component='a'
+						href='#app-bar-with-responsive-menu'
+						sx={{
+							mr: 2,
+							display: { xs: 'none', md: 'flex' },
+							fontFamily: 'monospace',
+							fontWeight: 700,
+							letterSpacing: '.3rem',
+							color: 'inherit',
+							textDecoration: 'none',
+						}}
+					>
+						Procto PuLsE
+					</Typography>
 							<Typography
 								variant='h6'
 								component='div'
