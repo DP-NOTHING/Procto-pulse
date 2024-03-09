@@ -31,7 +31,11 @@ export default function TeacherDashboard() {
 			setIsLoading(true);
 			const deletedExamId = e.currentTarget.id;
 			await axios.delete(
-				`${process.env.REACT_APP_BACKEND}/exam/${e.currentTarget.id}`
+				`${process.env.REACT_APP_BACKEND}/exam/${e.currentTarget.id}`,{
+					headers: {
+						"Authorization": "Bearer " + localStorage.getItem('token'), //the token is a variable which holds the token
+					  },
+				}
 			);
 			setExams(exams.filter((exam) => exam._id != deletedExamId));
 			setIsLoading(false);
@@ -54,7 +58,11 @@ export default function TeacherDashboard() {
 				const response = await axios.get(
 					`${
 						process.env.REACT_APP_BACKEND
-					}/exam/${localStorage.getItem('email')}`
+					}/exam/${localStorage.getItem('email')}`,{
+						headers: {
+							"Authorization": "Bearer " + localStorage.getItem('token'), //the token is a variable which holds the token
+						  },
+					}
 				);
 
 				return response;

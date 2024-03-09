@@ -414,7 +414,11 @@ export default function ParticipatedExams() {
       __v: 0
     } */
 				const response = await axios.get(
-					`${process.env.REACT_APP_BACKEND}/exam/`
+					`${process.env.REACT_APP_BACKEND}/exam/`,{
+						headers: {
+							"Authorization": "Bearer " + localStorage.getItem('token'), //the token is a variable which holds the token
+						  },
+					}
 				);
 				return response;
 			} catch (error) {

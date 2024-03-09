@@ -31,6 +31,11 @@ export default () => {
 					examId,
 					studentId,
 					score,
+				},
+				{
+					headers: {
+						Authorization: 'Bearer ' + localStorage.getItem('token'), //the token is a variable which holds the token
+					},
 				}
 			);
 			if (res.data.success) {

@@ -188,7 +188,11 @@ export default function ViewApplicationForm() {
 			// console.log(`${process.env.REACT_APP_BACKEND}/exam/${examID}`);
 			try {
 				const res = await axios.get(
-					`${process.env.REACT_APP_BACKEND}/applicationform/${examId}/${studentId}`
+					`${process.env.REACT_APP_BACKEND}/applicationform/${examId}/${studentId}`,{
+						headers: {
+							"Authorization": "Bearer " + localStorage.getItem('token'), //the token is a variable which holds the token
+						  },
+					}
 				);
 				// console.log(res.data);
 				/* {

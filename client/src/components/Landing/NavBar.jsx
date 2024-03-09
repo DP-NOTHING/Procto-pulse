@@ -15,14 +15,19 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth } from '../../provider/authProvider';
+import { Link, useNavigate } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
 const pages = ['Login', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
 
 function ResponsiveAppBar() {
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+	const Navigate = useNavigate()
+	const { setToken } = useAuth();
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
 	};
@@ -37,7 +42,23 @@ function ResponsiveAppBar() {
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
 	};
-
+	const logout = (e) => {
+		e.preventDefault();
+		
+		axios.post(`${process.env.REACT_APP_BACKEND}/logout/`,{},{headers: {
+			"Authorization": "Bearer " + localStorage.getItem('token'), //the token is a variable which holds the token
+		  },}).then(() => {
+			localStorage.removeItem('email');
+			localStorage.removeItem('role');
+			localStorage.removeItem('token');
+			localStorage.removeItem('id');
+			
+			
+			setToken();
+			Navigate('/login',{ replace: true });
+			// Navigate('/sign-in');
+		});
+	};
 	return (
 		<AppBar
 			position='sticky'
@@ -62,7 +83,7 @@ function ResponsiveAppBar() {
 						noWrap
 						component='a'
 						href='/'
-						// style={{backgroundColor:'black'}
+						style={{color:'rgba(256, 256, 256, 1)'}}
 						sx={{
 							mr: 2,
 							display: { xs: 'none', md: 'flex' },
@@ -209,32 +230,7 @@ function ResponsiveAppBar() {
 							display: { xs: 'none', md: 'flex' },
 						}}
 					>
-						<Link
-							style={{ all: 'unset' }}
-							to={'/login'}
-						>
-							<Button
-								key={'login'}
-								onClick={handleCloseNavMenu}
-								sx={{ mx: 1, my: 2, color: 'white' }}
-								endIcon={<LoginIcon />}
-							>
-								login
-							</Button>
-						</Link>
-						<Link
-							style={{ all: 'unset' }}
-							to={'/signup'}
-						>
-							<Button
-								key={'register'}
-								onClick={handleCloseNavMenu}
-								sx={{ mx: 1, my: 2, color: 'white' }}
-								endIcon={<PersonAddAltIcon />}
-							>
-								register
-							</Button>
-						</Link>
+						
 						<Link
 							style={{ all: 'unset' }}
 							to={localStorage.getItem('role') == 'teacher' ? '/teacher-dashboard' : '/student-dashboard'}
@@ -274,6 +270,44 @@ function ResponsiveAppBar() {
 								faq
 							</Button>
 						</Link>
+
+						{localStorage.getItem('id')==null?<div><Link
+							style={{ all: 'unset' }}
+							to={'/login'}
+						>
+							<Button
+								key={'login'}
+								onClick={handleCloseNavMenu}
+								sx={{ mx: 1, my: 2, color: 'white' }}
+								endIcon={<LoginIcon />}
+							>
+								login
+							</Button>
+						</Link><Link
+							style={{ all: 'unset' }}
+							to={'/signup'}
+						>
+							<Button
+								key={'register'}
+								onClick={handleCloseNavMenu}
+								sx={{ mx: 1, my: 2, color: 'white' }}
+								endIcon={<PersonAddAltIcon />}
+							>
+								register
+							</Button>
+						</Link></div>:
+							<Button
+								key={'logout'}
+								onClick={logout}
+								sx={{ mx: 1, my: 2, color: 'white' }}
+								endIcon={<LogoutIcon />}
+							>
+								Logout
+							</Button>
+						}
+
+						
+						
 
 
 					</Box>

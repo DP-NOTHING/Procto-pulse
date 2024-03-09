@@ -7,7 +7,6 @@ const dotenv = require('dotenv');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const router = express.Router();
-
 router.use(express.json());
 
 router.route('/login').post(async (req, res) => {
@@ -24,18 +23,14 @@ router.route('/login').post(async (req, res) => {
 		const isPasswordValid = bcrypt.compareSync(password, user.password);
 
 		if (isPasswordValid) {
-			// const token = jwt.sign(
-			// 	{ email: user.email },
-			// 	process.env.JWT_SECRET,
-			// 	{ expiresIn: '2h' }
-			// );
-
+			let token = jwt.sign({email:email,role:role}, process.env.JWT_SECRET, {expiresIn: '1h'});
+			console.log(token);
 			res.status(200).json({
 				firstname: user.firstname,
 				lastname: user.lastname,
 				password: user.password,
 				_id: user._id.toString(),
-				// token,
+				token: token,
 			});
 		} else {
 			res.status(401).json({ message: 'Incorrect password' });

@@ -98,7 +98,7 @@ export default function SignUp() {
 						sx={
 							{
 								// backgroundRepeat: 'no-repeat',
-								backgroundColor: orange[50],
+								backgroundColor: blue[50],
 								// backgroundSize: 'cover',
 								// backgroundPosition: 'center',
 							}
@@ -303,7 +303,7 @@ export default function SignUp() {
 										onClick={() => navigate('/login')}
 									>
 										<Link
-											href=''
+											href='/login'
 											variant='body2'
 											sx={{ color: 'black' }}
 										>

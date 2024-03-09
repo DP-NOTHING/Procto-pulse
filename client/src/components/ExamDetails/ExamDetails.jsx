@@ -40,7 +40,10 @@ const ExamDetails = () => {
 			setIsLoading(true);
 			const response = await axios.get(
 				`${process.env.REACT_APP_BACKEND}/exam/download/${details.file}`,
-				{ responseType: 'blob' }
+				{ responseType: 'blob' ,
+				headers: {
+					"Authorization": "Bearer " + localStorage.getItem('token'), //the token is a variable which holds the token
+				  },}
 			);
 			const file = new Blob([response.data], { type: 'application/pdf' });
 			//Build a URL from the file
@@ -61,7 +64,12 @@ const ExamDetails = () => {
 			// console.log(`${process.env.REACT_APP_BACKEND}/exam/${examId}`);
 			try {
 				const res = await axios.get(
-					`${process.env.REACT_APP_BACKEND}/applicationform/get-exam-details/${examId}`
+					`${process.env.REACT_APP_BACKEND}/applicationform/get-exam-details/${examId}`,{
+						
+						headers: {
+							"Authorization": "Bearer " + localStorage.getItem('token'), //the token is a variable which holds the token
+						  },
+					}
 				);
 				// console.log(res.data);
 				/* {

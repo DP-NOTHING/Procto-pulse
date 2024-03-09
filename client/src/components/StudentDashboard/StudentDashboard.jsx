@@ -406,9 +406,14 @@ export default function StudentDashboards() {
       file: 'c0e3fc7cffcb48d54348ee73577b5b3f',
       teacherEmail: 't@t.t',
       __v: 0
-    } */
+    } */	
+				console.log("herrry");
 				const response = await axios.get(
-					`${process.env.REACT_APP_BACKEND}/exam/`
+					`${process.env.REACT_APP_BACKEND}/exam/`,{
+						headers: {
+							"Authorization": "Bearer " + localStorage.getItem('token'), //the token is a variable which holds the token
+						  },
+					}
 				);
 				return response;
 			} catch (error) {

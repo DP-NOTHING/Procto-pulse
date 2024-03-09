@@ -4,7 +4,7 @@ const { connect } = require('./db/connection');
 const express = require('express');
 const app = express();
 const fs = require('fs');
-
+const jwt = require('jsonwebtoken');
 dotenv.config({ path: '../.env' });
 
 app.use(cors());
@@ -19,9 +19,30 @@ const applicationformRouter =
 	require('./applicationform/applicationform').router;
 const studentRouter = require('./student/student').router;
 const responsesRouter = require('./responses/responses').router;
+
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/logout', logoutRouter);
+
+app.use((req,res,next)=>{
+	let token = req.headers['authorization']
+	if (token && token.startsWith('Bearer ')) {
+        token = token.slice(7, token.length);
+    }
+	// console.log(token)
+	// console.log("-0900------")
+    if(!token) return res.status(401).json('Unauthorize user')
+	try{
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+		// console.log(decoded)
+        next()
+   }catch(e){
+		// console.log(e)
+    	res.status(400).json('Token not valid')
+   }
+   return 
+})
+
 app.use('/applicationform', applicationformRouter);
 app.use('/student', studentRouter);
 app.use('/exam-response', responsesRouter);
@@ -68,4 +89,8 @@ app.listen(process.env.PORT, async () => {
 	console.log(
 		`server is up and running at http://127.0.0.1:${process.env.PORT}`
 	);
+});
+
+app.use((err, req, res, next) => {
+    // response to user with 403 error and details
 });
