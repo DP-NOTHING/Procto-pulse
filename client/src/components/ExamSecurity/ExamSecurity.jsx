@@ -67,8 +67,7 @@ const ExamEntryForm = ({ examDetails }) => {
 						<Countdown
 							date={
 								Date.now() + 1000
-								/* (Date.parse(exam.testDateTime) - new Date()) @note need to do time changes
-								 */
+								// (Date.parse(exam.testDateTime) - new Date()) //@note need to do time changes
 							}
 							onComplete={() => setIsTimeout(true)}
 						/>

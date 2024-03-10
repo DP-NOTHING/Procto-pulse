@@ -27,7 +27,7 @@ export default function AlertDialog(props) {
 	const beep =
 		'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
 	// console.log(confirmSubmission);
-	if (!confirmSubmission) new Audio(beep).play();
+	if (!confirmSubmission) new Audio(beep).play(); //@note uncomment this
 	return (
 		<>
 			{/* <Button

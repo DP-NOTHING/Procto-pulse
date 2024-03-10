@@ -13,9 +13,9 @@ import ExamPage from './components/ExamPage/ExamPage';
 import StudentDashbboard from './components/StudentDashboard/StudentDashboard';
 import ViewApplicationForm from './components/ExamDetails/ViewApplicationForm';
 import ResponseSubmission from './components/ResponseSubmission/ResponseSubmission';
-import ViewResponse from './components/ExamDetails/ViewResponse.jsx';
+import ViewResponse from './components/ViewResponse/ViewResponse.jsx';
 import Routes from '../src/components/Routes/Routes.jsx';
-import AuthProvider from "./provider/authProvider";
+import AuthProvider from './provider/authProvider';
 import Offline from '../src/components/Offline/Offline';
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
 	const handleOnlineStatus = () => {
 		setIsOnline(navigator.onLine);
 	};
-	
+
 	useEffect(() => {
 		window.addEventListener('online', handleOnlineStatus);
 		window.addEventListener('offline', handleOnlineStatus);
@@ -34,8 +34,8 @@ function App() {
 	}, []);
 	return isOnline ? (
 		<AuthProvider>
-		<Routes />
-	  	</AuthProvider>
+			<Routes />
+		</AuthProvider>
 	) : (
 		<Offline />
 	);

@@ -23,29 +23,37 @@ const responsesRouter = require('./responses/responses').router;
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/logout', logoutRouter);
+app.use((req, res, next) => {
+	// console.log(req.url.includes('/exam/download'));
 
-app.use((req,res,next)=>{
-	let token = req.headers['authorization']
-	if (token && token.startsWith('Bearer ')) {
-        token = token.slice(7, token.length);
-    }
-	// console.log(token)
-	// console.log("-0900------")
-    if(!token) return res.status(401).json('Unauthorize user')
-	try{
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-		// console.log(decoded)
-        next()
-   }catch(e){
-		// console.log(e)
-    	res.status(400).json('Token not valid')
-   }
-   return 
-})
-
+	const downloadingUrl =
+		req.url.includes('/download') ||
+		req.url.includes('/get-idProof') ||
+		req.url.includes('/get-photo'); // @audit-ok needed to do this coz we just provide url directly where the stream will directly be provided. we are not requesting using axios so cant pass headers
+	if (downloadingUrl) next();
+	if (!downloadingUrl) {
+		let token = req.headers['authorization'];
+		if (token && token.startsWith('Bearer ')) {
+			token = token.slice(7, token.length);
+		}
+		// console.log(token)
+		// console.log("-0900------")
+		if (!token) return res.status(401).json('Unauthorize user');
+		try {
+			const decoded = jwt.verify(token, process.env.JWT_SECRET);
+			// console.log(decoded)
+			next();
+		} catch (e) {
+			// console.log(e)
+			res.status(400).json('Token not valid');
+		}
+	}
+	return;
+});
 app.use('/applicationform', applicationformRouter);
 app.use('/student', studentRouter);
 app.use('/exam-response', responsesRouter);
+app.use('/exam', exam);
 // app.post('/applicationform/', async (req, res) => {
 // 	res.json({ success: true });
 // });
@@ -54,8 +62,6 @@ const { Test } = require('./db/schema');
 const path = require('path');
 const mongoose = require('mongoose');
 const Exam = require('./db/schema');
-
-app.use('/exam', exam);
 
 app.post('/api/exams', async (req, res) => {
 	try {
@@ -92,5 +98,5 @@ app.listen(process.env.PORT, async () => {
 });
 
 app.use((err, req, res, next) => {
-    // response to user with 403 error and details
+	// response to user with 403 error and details
 });

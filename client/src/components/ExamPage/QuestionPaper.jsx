@@ -5,8 +5,6 @@ import axios from 'axios';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useRestrictCopyPaste } from './useRestrictCopyPaste.ts';
 import { Document, Page, pdfjs } from 'react-pdf';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import Pagination from '@mui/material/Pagination';
 import { Stack } from '@mui/material';
 import Loader from '../Loader/Loader.jsx';
@@ -14,8 +12,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AlertDialog from './AlertDialog.jsx';
 import ResponseArea from './ResponseArea.jsx';
 import Box from '@mui/material/Box';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
+// import 'react-pdf/dist/esm/Page/TextLayer.css';
+// import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 export default function QuestionPaper({ exam, show }) {
-	// console.log(show);
+	// console.log(exam);
 	pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 	const [numPages, setNumPages] = useState(null);
 	const [pageNumber, setPageNumber] = useState(1);
@@ -54,12 +55,14 @@ export default function QuestionPaper({ exam, show }) {
 					>
 						<Document
 							loading={<CircularProgress />}
+							// renderMode='custom'
 							file={`${process.env.REACT_APP_BACKEND}/exam/download/${exam.file}`}
 							onLoadSuccess={onDocumentLoadSuccess}
 						>
 							<Page
 								loading={<CircularProgress />}
 								pageNumber={pageNumber}
+								renderTextLayer={false}
 							/>
 						</Document>
 						{numPages && (

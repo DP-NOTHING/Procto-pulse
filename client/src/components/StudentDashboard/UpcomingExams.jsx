@@ -60,7 +60,7 @@ export default function UpcomingExams() {
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
 	const [exams, setExams] = React.useState([]);
-	const [participatedExams, setParticipatedExams] = React.useState([]);
+	// const [participatedExams, setParticipatedExams] = React.useState([]);
 	const [isLoading, setIsLoading] = React.useState(true);
 	const handleRegistration = async (e) => {
 		e.preventDefault();
@@ -103,8 +103,12 @@ export default function UpcomingExams() {
 			.then((response) => {
 				// console.log(response.data);
 				setExams(
-					response.data
-						.filter((e) => !e.participants.includes(localStorage.getItem('id')))
+					response?.data
+						.filter(
+							(e) =>
+								!e.participants.includes(localStorage.getItem('id')) &&
+								new Date(e.testDateTime) > new Date()
+						)
 						.map((e) => {
 							// console.log(e.participants.length);
 							return {
@@ -119,23 +123,23 @@ export default function UpcomingExams() {
 							};
 						})
 				);
-				setParticipatedExams(
-					response.data
-						.filter((e) => e.participants.includes(localStorage.getItem('id')))
-						.map((e) => {
-							// console.log(e.participants.length);
-							return {
-								...e,
-								'participants': e.participants.length,
-								'examDate': new Date(e.testDateTime)
-									.toLocaleString()
-									.split(',')[0],
-								'startTime': new Date(e.testDateTime)
-									.toLocaleString()
-									.split(',')[1],
-							};
-						})
-				);
+				// setParticipatedExams(
+				// 	response.data
+				// 		.filter((e) => e.participants.includes(localStorage.getItem('id')))
+				// 		.map((e) => {
+				// 			// console.log(e.participants.length);
+				// 			return {
+				// 				...e,
+				// 				'participants': e.participants.length,
+				// 				'examDate': new Date(e.testDateTime)
+				// 					.toLocaleString()
+				// 					.split(',')[0],
+				// 				'startTime': new Date(e.testDateTime)
+				// 					.toLocaleString()
+				// 					.split(',')[1],
+				// 			};
+				// 		})
+				// );
 				const exams = response.data;
 				// console.log(Array.isArray(exams[0].participants));
 				setIsLoading(false);
@@ -166,88 +170,117 @@ export default function UpcomingExams() {
 		<>
 			{isLoading && <Loader />}
 			{!isLoading && (
-				<Paper sx={{ width: '100%' }}>
-					<TableContainer sx={{ maxHeight: 440 }}>
+				<>
+					{exams.length == 0 && (
 						<Table
 							stickyHeader
 							aria-label='sticky table'
+							sx={{ border: 'none' }}
 						>
-							<TableHead>
-								<TableRow>
+							<TableHead sx={{ border: 'none' }}>
+								<TableRow sx={{ border: 'none' }}>
 									<TableCell
 										align='center'
 										colSpan={12}
+										sx={{ border: 'none' }}
 									>
-										<h3>Upcoming Exams</h3>
+										<h3>nothing to show</h3>
 									</TableCell>
-									{/* <TableCell
-            align='center'
-            colSpan={3}
-        >
-            Details
-        </TableCell> */}
-								</TableRow>
-								<TableRow>
-									{columns.map((column) => (
-										<TableCell
-											key={column.id}
-											align={column.align}
-											style={{
-												top: 57,
-												minWidth: column.minWidth,
-											}}
-										>
-											{column.label != 'Apply' && column.label}
-										</TableCell>
-									))}
 								</TableRow>
 							</TableHead>
-							<TableBody>
-								{exams
-									.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-									.map((row) => {
-										return (
-											<TableRow
-												hover
-												role='checkbox'
-												tabIndex={-1}
-												key={row._id}
-											>
-												{columns.map((column) => {
-													const value = row[column.id];
-													return (
-														<TableCell
-															key={column.id}
-															align={column.align}
-														>
-															{column.id != 'apply' && value}
-															{column.id === 'apply' && (
-																<Button
-																	id={row._id}
-																	onClick={handleRegistration}
-																>
-																	apply
-																</Button>
-															)}
-														</TableCell>
-													);
-												})}
-											</TableRow>
-										);
-									})}
-							</TableBody>
 						</Table>
-					</TableContainer>
-					<TablePagination
-						rowsPerPageOptions={[10, 25, 100]}
-						component='div'
-						count={exams.length}
-						rowsPerPage={rowsPerPage}
-						page={page}
-						onPageChange={handleChangePage}
-						onRowsPerPageChange={handleChangeRowsPerPage}
-					/>
-				</Paper>
+					)}
+					{exams.length != 0 && (
+						<Paper
+							sx={{ width: '100%' }}
+							elevation={false}
+						>
+							<TableContainer sx={{ maxHeight: 440 }}>
+								<Table
+									stickyHeader
+									aria-label='sticky table'
+								>
+									<TableHead>
+										<TableRow>
+											<TableCell
+												align='center'
+												colSpan={12}
+											>
+												<h3></h3>
+											</TableCell>
+											{/* <TableCell
+              align='center'
+              colSpan={3}
+          >
+              Details
+          </TableCell> */}
+										</TableRow>
+										<TableRow>
+											{columns.map((column) => (
+												<TableCell
+													key={column.id}
+													align={column.align}
+													style={{
+														top: 57,
+														minWidth: column.minWidth,
+													}}
+												>
+													{column.label != 'Apply' && column.label}
+												</TableCell>
+											))}
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{exams
+											.slice(
+												page * rowsPerPage,
+												page * rowsPerPage + rowsPerPage
+											)
+											.map((row) => {
+												return (
+													<TableRow
+														hover
+														role='checkbox'
+														tabIndex={-1}
+														key={row._id}
+													>
+														{columns.map((column) => {
+															const value = row[column.id];
+															return (
+																<TableCell
+																	key={column.id}
+																	align={column.align}
+																>
+																	{column.id != 'apply' && value}
+																	{column.id === 'apply' && (
+																		<Button
+																			id={row._id}
+																			onClick={handleRegistration}
+																		>
+																			apply
+																		</Button>
+																	)}
+																</TableCell>
+															);
+														})}
+													</TableRow>
+												);
+											})}
+									</TableBody>
+								</Table>
+							</TableContainer>
+							<TablePagination
+								rowsPerPageOptions={[10, 25, 100]}
+								component='div'
+								count={exams.length}
+								rowsPerPage={rowsPerPage}
+								page={page}
+								onPageChange={handleChangePage}
+								onRowsPerPageChange={handleChangeRowsPerPage}
+							/>
+						</Paper>
+					)}
+				</>
 			)}
 		</>
 	);

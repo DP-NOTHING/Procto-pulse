@@ -13,7 +13,7 @@ router
 				examId: req.body.examId,
 			});
 			// console.log(exists);
-			console.log(req.body)
+			console.log(req.body);
 			if (exists == null) {
 				await new Responses(req.body).save();
 				res.status(200).json({ success: true });
@@ -43,13 +43,11 @@ router
 		// console.log(req.query);
 	});
 
-router.route('/getall').get(async (req,res)=>{
+router.route('/getall').get(async (req, res) => {
 	const { studentId, examId } = req.query;
-	const response = await Responses.findOne(
-		{ examId, studentId }
-	);
+	const response = await Responses.findOne({ examId, studentId });
 	res.status(200).json(response);
-})
+});
 
 router
 	.route('/score')

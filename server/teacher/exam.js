@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { Exam, User, Applicationform } = require('../db/schema');
+const { Exam, User, Applicationform, Responses } = require('../db/schema');
 const bcrypt = require('bcryptjs');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const multer = require('multer');
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
+// const { Exam, Responses, User } = require('../db/schema');
 // const { default: mongoose } = require('mongoose');
 router.use(express.json());
 const storage = new GridFsStorage({
@@ -101,9 +102,10 @@ router.route('/:id').delete(async (req, res) => {
 	}
 });
 router.route('/download/:filename').get(async (req, res) => {
-	console.log(req.params.filename);
+	// console.log(req.params.filename);
 	try {
-		const file = await gfs.find({ filename: req.params.filename }).toArray()[0];
+		// const file = await gfs.find({ filename: req.params.filename }).toArray()[0];
+		// console.log(file);
 		res.setHeader('Content-disposition', 'attachment; filename=test.pdf');
 		res.set('Content-Type', 'application/pdf');
 		return await gfs.openDownloadStreamByName(req.params.filename).pipe(res);
@@ -114,4 +116,75 @@ router.route('/download/:filename').get(async (req, res) => {
 	// gfs.openDownloadStream(id)
 	res.status(200).json({ message: 'success' });
 });
+
+router.route('/get-participated-exams/:studentEmail').get(async (req, res) => {
+	try {
+		const student = await User.findOne({
+			email: req.params.studentEmail,
+			role: 'student',
+		});
+		// console.log(student);
+		const exams = await Exam.find({});
+		// console.log(exams);
+		const participatedExams = exams.filter((exam) =>
+			exam.participants.includes(student._id)
+		);
+		// console.log(participatedExams);
+		const resp = [];
+		for (const e of participatedExams) {
+			// console.log('eee', e);
+			const exist = await Responses.exists({
+				$and: [
+					{
+						examId: e._id.toString(),
+					},
+					{ studentId: student._id.toString() },
+				],
+			});
+			if (!exist && new Date(e.testDateTime) > new Date()) resp.push(e);
+		}
+		// console.log(resp);
+		res.status(200).json({ success: true, data: resp });
+		// } else res.status(200).json({ success: false });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: 'Internal Server Error' });
+	}
+});
+
+router.route('/past-participated-exams/:studentEmail').get(async (req, res) => {
+	try {
+		const student = await User.findOne({
+			email: req.params.studentEmail,
+			role: 'student',
+		});
+		console.log(student);
+		const exams = await Exam.find({});
+		console.log(exams);
+		const participatedExams = exams.filter((exam) =>
+			exam.participants.includes(student._id)
+		);
+		console.log(participatedExams);
+		const resp = [];
+		for (const e of participatedExams) {
+			// console.log('eee', e);
+			const exist = await Responses.exists({
+				$and: [
+					{
+						examId: e._id.toString(),
+					},
+					{ studentId: student._id.toString() },
+				],
+			});
+			if (exist || new Date(e.testDateTime) < new Date()) resp.push(e);
+		}
+		// console.log(resp);
+		res.status(200).json({ success: true, data: resp });
+		// } else res.status(200).json({ success: false });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: 'Internal Server Error' });
+	}
+});
+
 module.exports.router = router;

@@ -279,7 +279,7 @@ export default function ResponseArea(props) {
 					spellCheck
 					style={{
 						boxShadow: '0 0 0 1px gray',
-						margin: 6,
+						margin: 25,
 						fontSize: 'large',
 						letterSpacing: 0.1,
 						paddingLeft: 6,

@@ -413,11 +413,15 @@ export default function ParticipatedExams() {
       teacherEmail: 't@t.t',
       __v: 0
     } */
+				// console.log(process.env.REACT_APP_BACKEND);
 				const response = await axios.get(
-					`${process.env.REACT_APP_BACKEND}/exam/`,{
+					`${
+						process.env.REACT_APP_BACKEND
+					}/exam/get-participated-exams/${localStorage.getItem('email')}`,
+					{
 						headers: {
-							"Authorization": "Bearer " + localStorage.getItem('token'), //the token is a variable which holds the token
-						  },
+							'Authorization': 'Bearer ' + localStorage.getItem('token'), //the token is a variable which holds the token
+						},
 					}
 				);
 				return response;
@@ -429,12 +433,12 @@ export default function ParticipatedExams() {
 		fetchExams()
 			.then((response) => {
 				setParticipatedExams(
-					response.data
-						.filter(
-							(e) =>
-								e.participants.includes(localStorage.getItem('id')) &&
-								new Date(e.testDateTime) > new Date()
-						)
+					response.data.data
+						// .filter(
+						// 	(e) =>
+						// 		e.participants.includes(localStorage.getItem('id')) &&
+						// 		new Date(e.testDateTime) > new Date()
+						// )
 						.map((e) => {
 							// console.log(e.participants.length);
 							return {
@@ -480,140 +484,171 @@ export default function ParticipatedExams() {
 		<>
 			{isLoading && <Loader />}
 			{!isLoading && (
-				<Paper sx={{ width: '100%' }}>
-					<TableContainer sx={{ maxHeight: 440 }}>
+				<>
+					{participatedExams.length == 0 && (
 						<Table
 							stickyHeader
 							aria-label='sticky table'
+							sx={{ border: 'none' }}
 						>
-							<TableHead>
-								<TableRow>
+							<TableHead sx={{ border: 'none' }}>
+								<TableRow sx={{ border: 'none' }}>
 									<TableCell
 										align='center'
 										colSpan={12}
+										sx={{ border: 'none' }}
 									>
-										<h3>Participated Exams</h3>
+										<h3>nothing to show</h3>
 									</TableCell>
-									{/* <TableCell
+								</TableRow>
+							</TableHead>
+						</Table>
+					)}
+					{participatedExams.length != 0 && (
+						<Paper
+							sx={{ width: '100%' }}
+							elevation={false}
+						>
+							<TableContainer sx={{ maxHeight: 440 }}>
+								<Table
+									stickyHeader
+									aria-label='sticky table'
+								>
+									<TableHead>
+										<TableRow>
+											<TableCell
+												align='center'
+												colSpan={12}
+											>
+												<h3></h3>
+											</TableCell>
+											{/* <TableCell
 										align='center'
 										colSpan={3}
 									>
 										Details
 									</TableCell> */}
-								</TableRow>
-								<TableRow>
-									{columns.map((column) => (
-										<TableCell
-											key={column.id}
-											align={column.align}
-											style={{
-												top: 57,
-												minWidth: column.minWidth,
-											}}
-										>
-											{column.label != 'Apply' && column.label}
-										</TableCell>
-									))}
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{participatedExams
-									.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-									.map((row) => {
-										console.log();
-										return (
-											<TableRow
-												hoverrow
-												role='checkbox'
-												tabIndex={-1}
-												key={row._id}
-											>
-												{columns.map((column) => {
-													// console.log(
-													// 	Date.now()  +
-													// 		(new Date(row.testDateTime) - new Date())
-													// );
-													const value = row[column.id];
-													return (
-														<TableCell
-															key={column.id}
-															align={column.align}
-														>
-															{column.id != 'apply' && value}
-															{column.id === 'apply' && (
-																<Countdown
-																	date={
-																		Date.now() + 1000
-																		// (Date.parse(row.testDateTime) -
-																		// 	new Date()) -
-																		// 15 * 60 * 1000 @note need to do time changes
-																	}
-																	renderer={({
-																		days,
-																		hours,
-																		minutes,
-																		seconds,
-																		completed,
-																	}) => {
-																		// console.log(days);
-																		if (completed) {
-																			return (
-																				<Button
-																					id={`${
-																						row._id
-																					} ${localStorage.getItem('id')}`}
-																					onClick={(e) =>
-																						handleStartExam(e, row)
-																					}
-																				>
-																					start exam
-																				</Button>
-																			);
-																		} else {
-																			return (
-																				<Tooltip
-																					title={
-																						<div style={{ fontSize: 13 }}>
-																							time remaining until student can
-																							start exam
-																						</div>
-																					}
-																				>
-																					<span>
+										</TableRow>
+										<TableRow>
+											{columns.map((column) => (
+												<TableCell
+													key={column.id}
+													align={column.align}
+													style={{
+														top: 57,
+														minWidth: column.minWidth,
+													}}
+												>
+													{column.label != 'Apply' && column.label}
+												</TableCell>
+											))}
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{participatedExams
+											.slice(
+												page * rowsPerPage,
+												page * rowsPerPage + rowsPerPage
+											)
+											.map((row) => {
+												console.log();
+												return (
+													<TableRow
+														hoverrow
+														role='checkbox'
+														tabIndex={-1}
+														key={row._id}
+													>
+														{columns.map((column) => {
+															// console.log(
+															// 	Date.now()  +
+															// 		(new Date(row.testDateTime) - new Date())
+															// );
+															const value = row[column.id];
+															return (
+																<TableCell
+																	key={column.id}
+																	align={column.align}
+																>
+																	{column.id != 'apply' && value}
+																	{column.id === 'apply' && (
+																		<Countdown
+																			date={
+																				Date.now() + 1000
+																				// (Date.parse(row.testDateTime) -
+																				// 	new Date()) -
+																				// 15 * 60 * 1000 //@note need to do time changes
+																			}
+																			renderer={({
+																				days,
+																				hours,
+																				minutes,
+																				seconds,
+																				completed,
+																			}) => {
+																				// console.log(days);
+																				if (completed) {
+																					return (
 																						<Button
-																							variant='contained'
-																							disabled
+																							id={`${
+																								row._id
+																							} ${localStorage.getItem('id')}`}
+																							onClick={(e) =>
+																								handleStartExam(e, row)
+																							}
 																						>
-																							Days: {days} Hours: {hours + ' '}
-																							Minutes: {minutes} Seconds:{' '}
-																							{seconds}
+																							start exam
 																						</Button>
-																					</span>
-																				</Tooltip>
-																			);
-																		}
-																	}}
-																></Countdown>
-															)}
-														</TableCell>
-													);
-												})}
-											</TableRow>
-										);
-									})}
-							</TableBody>
-						</Table>
-					</TableContainer>
-					<TablePagination
-						rowsPerPageOptions={[10, 25, 100]}
-						component='div'
-						count={exams.length}
-						rowsPerPage={rowsPerPage}
-						page={page}
-						onPageChange={handleChangePage}
-						onRowsPerPageChange={handleChangeRowsPerPage}
-					/>
-				</Paper>
+																					);
+																				} else {
+																					return (
+																						<Tooltip
+																							title={
+																								<div style={{ fontSize: 13 }}>
+																									time remaining until student
+																									can start exam
+																								</div>
+																							}
+																						>
+																							<span>
+																								<Button
+																									variant='contained'
+																									disabled
+																								>
+																									Days: {days} Hours:{' '}
+																									{hours + ' '}
+																									Minutes: {
+																										minutes
+																									} Seconds: {seconds}
+																								</Button>
+																							</span>
+																						</Tooltip>
+																					);
+																				}
+																			}}
+																		></Countdown>
+																	)}
+																</TableCell>
+															);
+														})}
+													</TableRow>
+												);
+											})}
+									</TableBody>
+								</Table>
+							</TableContainer>
+							<TablePagination
+								rowsPerPageOptions={[10, 25, 100]}
+								component='div'
+								count={exams.length}
+								rowsPerPage={rowsPerPage}
+								page={page}
+								onPageChange={handleChangePage}
+								onRowsPerPageChange={handleChangeRowsPerPage}
+							/>
+						</Paper>
+					)}
+				</>
 			)}
 		</>
 	);

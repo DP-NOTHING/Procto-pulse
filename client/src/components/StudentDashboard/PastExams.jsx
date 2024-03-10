@@ -404,10 +404,13 @@ export default function PastExams() {
       __v: 0
     } */
 				const response = await axios.get(
-					`${process.env.REACT_APP_BACKEND}/exam/`,{
+					`${
+						process.env.REACT_APP_BACKEND
+					}/exam/past-participated-exams/${localStorage.getItem('email')}`,
+					{
 						headers: {
-							"Authorization": "Bearer " + localStorage.getItem('token'), //the token is a variable which holds the token
-						  },
+							'Authorization': 'Bearer ' + localStorage.getItem('token'), //the token is a variable which holds the token
+						},
 					}
 				);
 				return response;
@@ -421,13 +424,12 @@ export default function PastExams() {
 				// console.log(response.data);
 
 				setPastExams(
-					response.data
-						.filter(
-							(e) =>
-								e.participants.includes(
-									localStorage.getItem('id')
-								) && new Date(e.testDateTime) < new Date()
-						)
+					response.data.data
+						// .filter(
+						// 	(e) =>
+						// 		e.participants.includes(localStorage.getItem('id')) &&
+						// 		new Date(e.testDateTime) < new Date()
+						// )
 						.map((e) => {
 							// console.log(e.participants.length);
 							return {
@@ -472,99 +474,128 @@ export default function PastExams() {
 	return (
 		<>
 			{isLoading && <Loader />}
+			{/* {!isLoading && pastExams.length == 0 && <h1>Nothing to show</h1>} */}
 			{!isLoading && (
-				<Paper sx={{ width: '100%' }}>
-					<TableContainer sx={{ maxHeight: 440 }}>
+				<>
+					{pastExams.length == 0 && (
 						<Table
 							stickyHeader
 							aria-label='sticky table'
+							sx={{ border: 'none' }}
 						>
-							<TableHead>
-								<TableRow>
+							<TableHead sx={{ border: 'none' }}>
+								<TableRow sx={{ border: 'none' }}>
 									<TableCell
 										align='center'
 										colSpan={12}
+										sx={{ border: 'none' }}
 									>
-										<h3>Past Exams</h3>
+										<h3>nothing to show</h3>
 									</TableCell>
-									{/* <TableCell
+								</TableRow>
+							</TableHead>
+						</Table>
+					)}
+					{pastExams.length != 0 && (
+						<Paper
+							sx={{ width: '100%' }}
+							elevation={false}
+						>
+							<TableContainer sx={{ maxHeight: 440 }}>
+								<Table
+									stickyHeader
+									aria-label='sticky table'
+								>
+									<TableHead>
+										<TableRow>
+											<TableCell
+												align='center'
+												colSpan={12}
+											>
+												<h3></h3>
+											</TableCell>
+											{/* <TableCell
 										align='center'
 										colSpan={3}
 									>
 										Details
 									</TableCell> */}
-								</TableRow>
-								<TableRow>
-									{columns.map((column) => (
-										<TableCell
-											key={column.id}
-											align={column.align}
-											style={{
-												top: 57,
-												minWidth: column.minWidth,
-											}}
-										>
-											{column.label != 'Apply' &&
-												column.label}
-										</TableCell>
-									))}
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{pastExams
-									.slice(
-										page * rowsPerPage,
-										page * rowsPerPage + rowsPerPage
-									)
-									.map((row) => {
-										return (
-											<TableRow
-												hover
-												role='checkbox'
-												tabIndex={-1}
-												key={row._id}
-											>
-												{columns.map((column) => {
-													const value =
-														row[column.id];
-													return (
-														<TableCell
-															key={column.id}
-															align={column.align}
-														>
-															{column.id !=
-																'apply' &&
-																value}
-															{column.id ===
-																'apply' && (
-																<Button
-																	id={row._id}
-																	onClick={
-																		handleRegistration
-																	}
+										</TableRow>
+										<TableRow>
+											{columns.map((column) => (
+												<TableCell
+													key={column.id}
+													align={column.align}
+													style={{
+														top: 57,
+														minWidth: column.minWidth,
+													}}
+												>
+													{column.label != 'Apply' && column.label}
+												</TableCell>
+											))}
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{pastExams
+											.slice(
+												page * rowsPerPage,
+												page * rowsPerPage + rowsPerPage
+											)
+											.map((row) => {
+												return (
+													<TableRow
+														hover
+														role='checkbox'
+														tabIndex={-1}
+														key={row._id}
+													>
+														{columns.map((column) => {
+															const value = row[column.id];
+															return (
+																<TableCell
+																	key={column.id}
+																	align={column.align}
 																>
-																	Performance
-																</Button>
-															)}
-														</TableCell>
-													);
-												})}
-											</TableRow>
-										);
-									})}
-							</TableBody>
-						</Table>
-					</TableContainer>
-					<TablePagination
-						rowsPerPageOptions={[10, 25, 100]}
-						component='div'
-						count={exams.length}
-						rowsPerPage={rowsPerPage}
-						page={page}
-						onPageChange={handleChangePage}
-						onRowsPerPageChange={handleChangeRowsPerPage}
-					/>
-				</Paper>
+																	{column.id != 'apply' && value}
+																	{column.id === 'apply' && (
+																		<Button
+																			id={row._id}
+																			onClick={() => {
+																				Navigate('/view-response', {
+																					state: {
+																						examId: row._id,
+																						studentId:
+																							localStorage.getItem('id'),
+																						flag: false,
+																					},
+																				});
+																			}}
+																		>
+																			Performance
+																		</Button>
+																	)}
+																</TableCell>
+															);
+														})}
+													</TableRow>
+												);
+											})}
+									</TableBody>
+								</Table>
+							</TableContainer>
+							<TablePagination
+								rowsPerPageOptions={[10, 25, 100]}
+								component='div'
+								count={exams.length}
+								rowsPerPage={rowsPerPage}
+								page={page}
+								onPageChange={handleChangePage}
+								onRowsPerPageChange={handleChangeRowsPerPage}
+							/>
+						</Paper>
+					)}
+				</>
 			)}
 		</>
 	);

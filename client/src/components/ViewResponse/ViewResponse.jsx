@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import ResponseArea from '../ExamPage/ResponseArea';
+import ResponseArea from '../ExamPage/ResponseArea.jsx';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Loader from '../Loader/Loader';
+import Loader from '../Loader/Loader.jsx';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button, Paper } from '@mui/material';
 import AlertDialog from '../ExamPage/AlertDialog.jsx';
-import NavBar from '../Landing/NavBar';
+import NavBar from '../Landing/NavBar.jsx';
 export default () => {
 	const Navigate = useNavigate();
 	const [score, setScore] = useState('');
@@ -18,8 +18,9 @@ export default () => {
 	const [differentPerson, setDifferentPerson] = useState(0);
 	const [zeroPerson, setZeroPerson] = useState(0);
 	const {
-		state: { studentId, examId },
+		state: { studentId, examId, flag },
 	} = useLocation();
+	// flag true->teacher false->student
 	const saveScore = async (confirm) => {
 		setDialog(null);
 		// alert(score);
@@ -48,20 +49,22 @@ export default () => {
 	};
 	// console.log(studentId, examId);
 	useEffect(() => {
-		axios
-			.get(`${process.env.REACT_APP_BACKEND}/exam-response/getall`, {
-				params: { studentId, examId },
-			}).then((res)=>{
-				setDifferentPerson(res.data.differentPerson);
-				setMultiplePerson(res.data.multiplePerson);
-				setZeroPerson(res.data.zeroPerson);
-			})
+		// axios
+		// 	.get(`${process.env.REACT_APP_BACKEND}/exam-response/getall`, {
+		// 		params: { studentId, examId },
+		// 	})
+		// 	.then((res) => {
+		// 		setDifferentPerson(res.data.differentPerson);
+		// 		setMultiplePerson(res.data.multiplePerson);
+		// 		setZeroPerson(res.data.zeroPerson);
+		// 	});
 		axios
 			.get(`${process.env.REACT_APP_BACKEND}/exam-response`, {
 				params: { studentId, examId },
+				'Authorization': 'Bearer ' + localStorage.getItem('token'),
 			})
 			.then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 				setResponse(res.data.response);
 				axios
 					.get(`${process.env.REACT_APP_BACKEND}/exam-response/score`, {
@@ -69,7 +72,7 @@ export default () => {
 					})
 					.then((res) => {
 						// console.log(res.data);
-						setScore(res.data.score);
+						setScore(res.data?.score);
 						setIsLoading(false);
 					});
 				// setIsLoading(false);
@@ -83,6 +86,7 @@ export default () => {
 					zIndex: 1000,
 					position: '-webkit-sticky' /* Safari */,
 					position: 'sticky',
+					margin: 30,
 					top: 0,
 				}}
 			>
@@ -108,6 +112,7 @@ export default () => {
 						label='Score'
 						variant='filled'
 						autoFocus
+						disabled={!flag}
 					/>
 					{/* <TextField
 						label='Score'
@@ -116,14 +121,16 @@ export default () => {
 						onChange={(e) => setScore(e.target.value)}
 						autoFocus
 					/> */}
-					<Button
-						variant='contained'
-						color='primary'
-						onClick={() => setDialog('You sure you want to save the score ?')}
-						sx={{ p: 1.2 }}
-					>
-						save score
-					</Button>
+					{flag && (
+						<Button
+							variant='contained'
+							color='primary'
+							onClick={() => setDialog('You sure you want to save the score ?')}
+							sx={{ p: 1.2 }}
+						>
+							save score
+						</Button>
+					)}
 					{/* <TextField
 						id='standard-basic'
 						label='Standard'
@@ -134,7 +141,7 @@ export default () => {
 		);
 	}
 	return (
-		<>	
+		<>
 			<NavBar />
 			{isLoading && <Loader />}
 			{!isLoading && (
