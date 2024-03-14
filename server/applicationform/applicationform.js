@@ -30,7 +30,10 @@ router.route('/get-exam-details/:id').get(async (req, res) => {
 		// );
 		const participantsList = await Applicationform.find(
 			{
-				studentId: { $in: exam.participants },
+				$and: [
+					{ studentId: { $in: exam.participants } },
+					{ examId: exam._id.toString() },
+				],
 			},
 			{
 				firstname: 1,
@@ -135,9 +138,7 @@ router.route('/').post(
 				{ _id: req.body.examId },
 				{
 					'$push': {
-						'participants': new mongoose.Types.ObjectId(
-							req.body.studentId
-						),
+						'participants': new mongoose.Types.ObjectId(req.body.studentId),
 					},
 				}
 			);
