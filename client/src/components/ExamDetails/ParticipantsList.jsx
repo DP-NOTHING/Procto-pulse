@@ -35,8 +35,8 @@ const columns = [
 	},
 ];
 export default function ParticipantsList({ data, examId }) {
-	// console.log(data);
-	// data.clear();
+	
+	
 	const Navigate = useNavigate();
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -61,7 +61,7 @@ export default function ParticipantsList({ data, examId }) {
 	};
 	const handleViewResponse = async (e) => {
 		e.preventDefault();
-		// console.log('a');
+		
 		Navigate('/ViewResponse', {
 			state: {
 				examId: e.currentTarget.id.toString().split(' ')[0],
@@ -129,7 +129,7 @@ export default function ParticipantsList({ data, examId }) {
 								{data
 									.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 									.map((row) => {
-										// console.log(row);
+										
 										return (
 											<TableRow
 												hover

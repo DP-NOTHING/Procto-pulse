@@ -3,7 +3,7 @@ import './ExamEntryForm.css';
 import { Button } from '@mui/material';
 import Countdown from 'react-countdown';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import screenfull from 'screenfull';
 const ExamEntryForm = ({ examDetails }) => {
 	const Navigate = useNavigate();
 	// console.log(examDetails);
@@ -18,6 +18,11 @@ const ExamEntryForm = ({ examDetails }) => {
 	// );
 	const [isChecked, setIsChecked] = useState(true); //@note initially false
 	const [isTimeout, setIsTimeout] = useState(false);
+	function setfull(){
+		if (screenfull.isEnabled) {
+			screenfull.request();
+		}
+	}
 	// useEffect(() => {
 	// 	const timer = setInterval(() => {
 	// 		setTimeLeft((prevTimeLeft) => {
@@ -48,6 +53,7 @@ const ExamEntryForm = ({ examDetails }) => {
 		} else if (!isChecked) {
 			alert('Please agree to the terms');
 		}
+		setfull();
 	};
 
 	// const formatTime = (seconds) => {

@@ -61,20 +61,32 @@ export default () => {
 		axios
 			.get(`${process.env.REACT_APP_BACKEND}/exam-response`, {
 				params: { studentId, examId },
-				'Authorization': 'Bearer ' + localStorage.getItem('token'),
+				headers:{
+					'Authorization': 'Bearer ' + localStorage.getItem('token'),
+				}
+				
 			})
 			.then((res) => {
-				// console.log(res.data);
+				console.log(res.data);
 				setResponse(res.data.response);
+				setDifferentPerson(res.data.differentPerson);
+				setMultiplePerson(res.data.multiplePerson);
+				setZeroPerson(res.data.zeroPerson);
 				axios
 					.get(`${process.env.REACT_APP_BACKEND}/exam-response/score`, {
 						params: { studentId, examId },
+						headers:{
+							'Authorization': 'Bearer ' + localStorage.getItem('token'),
+						}
 					})
 					.then((res) => {
-						// console.log(res.data);
+						console.log(res.data);
 						setScore(res.data?.score);
+
 						setIsLoading(false);
 					});
+
+				
 				// setIsLoading(false);
 			});
 	}, []);

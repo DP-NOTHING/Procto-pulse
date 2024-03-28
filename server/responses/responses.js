@@ -28,7 +28,7 @@ router
 			const { studentId, examId } = req.query;
 			const response = await Responses.findOne(
 				{ examId, studentId },
-				{ response: 1, _id: 0 }
+				{  _id: 0 }
 			);
 			// console.log(response);
 			res.status(200).json(

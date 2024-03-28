@@ -27,11 +27,11 @@ export default function ExamPage() {
 	const [dialog, setDialog] = useState(null);
 	const [abc, setAbc] = useState('');
 
-	/* @note uncomment this	useEffect(() => {
+	useEffect(() => {
 		console.log('multiplePerson:', multiplePerson);
 		console.log('zeroPerson:', zeroPerson);
 		console.log('differentPerson:', differentPerson);
-	}, [multiplePerson, zeroPerson, differentPerson]); */
+	}, [multiplePerson, zeroPerson, differentPerson]); 
 	const handleTabChanged = (e) => {
 		//do something else
 		// if (!document.fullscreenElement) {
@@ -67,7 +67,7 @@ export default function ExamPage() {
 		e.preventDefault();
 		setDialog('Zero person detected');
 	};
-	/* uncomment this	useEffect(() => {
+	useEffect(() => {
 		window.addEventListener('blur', handleTabChanged);
 		window.addEventListener('fullscreenchange', handleFullScreenChange);
 		window.addEventListener('multiplePerson', multiplePersonHandler);
@@ -80,7 +80,7 @@ export default function ExamPage() {
 			window.removeEventListener('zeroPerson', zeroPersonHandler);
 			window.removeEventListener('differentPerson', differentPersonHandler);
 		};
-	}, []); */
+	}, []); 
 
 	//for first time pic from app form
 	// useEffect(() => {
@@ -151,10 +151,9 @@ export default function ExamPage() {
 			// console.log(imageSrc);
 			console.log(typeof stuimage);
 			console.log(stuimage.length);
-
+			console.log("afffffffffffffffffffffffffffffffffffffffffff")
 			console.log(typeof imageSrc);
-			axios
-				.post(`${process.env.REACT_APP_SERVICE}/check`, {
+			axios.post(`${process.env.REACT_APP_SERVICE}/check`, {
 					photo: stuimage,
 					webcam: imageSrc,
 				})
@@ -167,18 +166,20 @@ export default function ExamPage() {
 						let event = new Event('multiplePerson');
 						window.dispatchEvent(event);
 					}
-
-					if (res.data.no_of_person == 0) {
-						setZeroPerson((prevZeroPerson) => prevZeroPerson + 1);
-						let event = new Event('zeroPerson');
-						window.dispatchEvent(event);
-					} else if (res.data.verified == false) {
-						setDifferentPerson(
-							(prevDifferentPerson) => prevDifferentPerson + 1
-						);
-						let event = new Event('differentPerson');
-						window.dispatchEvent(event);
+					else{
+						if (res.data.no_of_person == 0) {
+							setZeroPerson((prevZeroPerson) => prevZeroPerson + 1);
+							let event = new Event('zeroPerson');
+							window.dispatchEvent(event);
+						} else if (res.data.verified == false) {
+							setDifferentPerson(
+								(prevDifferentPerson) => prevDifferentPerson + 1
+							);
+							let event = new Event('differentPerson');
+							window.dispatchEvent(event);
+						}
 					}
+					
 				})
 				.catch((err) => {
 					console.log('feefesfes');
@@ -187,7 +188,7 @@ export default function ExamPage() {
 		}
 		console.log('hey');
 	}
-	/* @note uncomment this useEffect(() => {
+	useEffect(() => {
 		console.log(studentId);
 		axios
 			.get(`${process.env.REACT_APP_BACKEND}/student/getimage/${studentId}`)
@@ -217,7 +218,7 @@ export default function ExamPage() {
 				}
 			}, 3000);
 		}
-	}, [cam, stuimage]); */
+	}, [cam, stuimage]); 
 
 	//   setTimeout(() => {
 	// 	setCam(true);
@@ -226,7 +227,7 @@ export default function ExamPage() {
 	useRestrictCopyPaste({ window, actions: ['copy', 'cut', 'paste', 'select'] });
 	return (
 		<>
-			{/* @note uncomment this
+			
       <div>
 				<Webcam
 					audio={false}
@@ -239,10 +240,10 @@ export default function ExamPage() {
 						console.log('media error=========================');
 					}}
 					forceScreenshotSourceSize={true}
-					// style={{ width: '0%' }}
+					style={{ width: '0%' }}
 					// screenshotQuality={1}
 				/>
-			</div> */}
+			</div> 
 			<Drawer
 				startTime={startTime}
 				exam={exam}
@@ -268,13 +269,13 @@ export default function ExamPage() {
 					show={!showResponse}
 				/> */}
 
-			{/* @note uncomment this 
+			 
         {dialog && (
 					<AlertDialog
 						dialogContent={dialog}
 						handler={setDialog}
 					/>
-				)} */}
+				)} 	
 			{/* <ResponseArea show={showResponse} /> */}
 			{/* <button
           onClick={() => {
@@ -285,24 +286,16 @@ export default function ExamPage() {
         </button> */}
 			{/* </Stack> */}
 			{/* <h1>hr</h1> */}
-			{/*@note uncomment this {setTimeout(() => {
-				return (
-					<div>
-						<h1>hr</h1>
-						<img src={stuimage}></img>
-						<img src={imgSrc}></img>
-					</div>
-				);
-			}, 5000)} */}
+	
 
-			{/*@note uncomment this 
+			
       {dialog && (
         <AlertDialog
           type={"Warning"}
           dialogContent={dialog}
           handler={setDialog}
         />
-      )} */}
+      )} 
 		</>
 	);
 }
