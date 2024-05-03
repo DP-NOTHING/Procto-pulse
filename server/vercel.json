@@ -14,5 +14,6 @@
               "Access-Control-Allow-Origin": "*"
             }
         }
-    ]
+    ],
+    "installCommand": "npm install --force"
 }
