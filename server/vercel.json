@@ -1,6 +1,11 @@
 {   
     "installCommand": "npm install --force",
-    
+    "builds":[
+        {
+            "src":"./app.js",
+            "use":"@vercel/node"
+        }
+    ],
     "routes":[
         {
             "src":"/(.*)",
