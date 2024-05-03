@@ -1,10 +1,6 @@
-{
-    "builds":[
-        {
-            "src":"./app.js",
-            "use":"@vercel/node"
-        }
-    ],
+{   
+    "installCommand": "npm install --force",
+    
     "routes":[
         {
             "src":"/(.*)",
@@ -14,6 +10,6 @@
               "Access-Control-Allow-Origin": "*"
             }
         }
-    ],
-    "installCommand": "npm install --force"
+    ]
+    
 }
