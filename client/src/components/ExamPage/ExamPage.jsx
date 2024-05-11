@@ -31,7 +31,7 @@ export default function ExamPage() {
 		console.log('multiplePerson:', multiplePerson);
 		console.log('zeroPerson:', zeroPerson);
 		console.log('differentPerson:', differentPerson);
-	}, [multiplePerson, zeroPerson, differentPerson]); 
+	}, [multiplePerson, zeroPerson, differentPerson]);
 	const handleTabChanged = (e) => {
 		//do something else
 		// if (!document.fullscreenElement) {
@@ -80,7 +80,7 @@ export default function ExamPage() {
 			window.removeEventListener('zeroPerson', zeroPersonHandler);
 			window.removeEventListener('differentPerson', differentPersonHandler);
 		};
-	}, []); 
+	}, []);
 
 	//for first time pic from app form
 	// useEffect(() => {
@@ -151,9 +151,11 @@ export default function ExamPage() {
 			// console.log(imageSrc);
 			console.log(typeof stuimage);
 			console.log(stuimage.length);
-			console.log("afffffffffffffffffffffffffffffffffffffffffff")
+			console.log('afffffffffffffffffffffffffffffffffffffffffff');
 			console.log(typeof imageSrc);
-			axios.post(`${process.env.REACT_APP_SERVICE}/check`, {
+			// console.log(process.env.REACT_APP_SERVICE);
+			axios
+				.post(`${process.env.REACT_APP_SERVICE}/check`, {
 					photo: stuimage,
 					webcam: imageSrc,
 				})
@@ -165,8 +167,7 @@ export default function ExamPage() {
 						setMultiplePerson((prevMultiplePerson) => prevMultiplePerson + 1);
 						let event = new Event('multiplePerson');
 						window.dispatchEvent(event);
-					}
-					else{
+					} else {
 						if (res.data.no_of_person == 0) {
 							setZeroPerson((prevZeroPerson) => prevZeroPerson + 1);
 							let event = new Event('zeroPerson');
@@ -179,7 +180,6 @@ export default function ExamPage() {
 							window.dispatchEvent(event);
 						}
 					}
-					
 				})
 				.catch((err) => {
 					console.log('feefesfes');
@@ -218,7 +218,7 @@ export default function ExamPage() {
 				}
 			}, 3000);
 		}
-	}, [cam, stuimage]); 
+	}, [cam, stuimage]);
 
 	//   setTimeout(() => {
 	// 	setCam(true);
@@ -227,8 +227,7 @@ export default function ExamPage() {
 	useRestrictCopyPaste({ window, actions: ['copy', 'cut', 'paste', 'select'] });
 	return (
 		<>
-			
-      <div>
+			<div>
 				<Webcam
 					audio={false}
 					ref={webcamRef}
@@ -243,7 +242,7 @@ export default function ExamPage() {
 					style={{ width: '0%' }}
 					// screenshotQuality={1}
 				/>
-			</div> 
+			</div>
 			<Drawer
 				startTime={startTime}
 				exam={exam}
@@ -269,13 +268,12 @@ export default function ExamPage() {
 					show={!showResponse}
 				/> */}
 
-			 
-        {dialog && (
-					<AlertDialog
-						dialogContent={dialog}
-						handler={setDialog}
-					/>
-				)} 	
+			{dialog && (
+				<AlertDialog
+					dialogContent={dialog}
+					handler={setDialog}
+				/>
+			)}
 			{/* <ResponseArea show={showResponse} /> */}
 			{/* <button
           onClick={() => {
@@ -286,16 +284,14 @@ export default function ExamPage() {
         </button> */}
 			{/* </Stack> */}
 			{/* <h1>hr</h1> */}
-	
 
-			
-      {dialog && (
-        <AlertDialog
-          type={"Warning"}
-          dialogContent={dialog}
-          handler={setDialog}
-        />
-      )} 
+			{dialog && (
+				<AlertDialog
+					type={'Warning'}
+					dialogContent={dialog}
+					handler={setDialog}
+				/>
+			)}
 		</>
 	);
 }

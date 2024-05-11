@@ -113,7 +113,7 @@ export default function UpcomingExams() {
 							// console.log(e.participants.length);
 							return {
 								...e,
-								'participants': e.participants.length,
+								'participants': e?.participants?.length,
 								'examDate': new Date(e.testDateTime)
 									.toLocaleString()
 									.split(',')[0],
@@ -140,7 +140,7 @@ export default function UpcomingExams() {
 				// 			};
 				// 		})
 				// );
-				const exams = response.data;
+				const exams = response?.data;
 				// console.log(Array.isArray(exams[0].participants));
 				setIsLoading(false);
 				// console.log(exams);

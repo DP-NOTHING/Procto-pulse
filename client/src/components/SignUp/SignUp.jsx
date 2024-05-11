@@ -20,7 +20,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Radio from '@mui/material/Radio';
 import { FormLabel, Paper } from '@mui/material';
-import { deepPurple, deepOrange, grey, orange, blue } from '@mui/material/colors';
+import {
+	deepPurple,
+	deepOrange,
+	grey,
+	orange,
+	blue,
+} from '@mui/material/colors';
 import Loader from '../Loader/Loader';
 import axios from 'axios';
 
@@ -50,14 +56,12 @@ export default function SignUp() {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		console.log(process.env.REACT_APP_BACKEND);
 		console.log(formData);
 		try {
 			setIsLoading(true);
 			axios
-				.post(
-					`${process.env.REACT_APP_BACKEND}/signup/signup/`,
-					formData
-				)
+				.post(`${process.env.REACT_APP_BACKEND}/signup/signup/`, formData)
 				.then(() => {
 					console.log('User signed up successfully');
 					// Redirect to login or any other page after successful signup
@@ -79,57 +83,55 @@ export default function SignUp() {
 			{isLoading && <Loader />}
 			{isLoading || (
 				<ThemeProvider theme={defaultTheme}>
-				<Grid
-					container
-					component='main'
-					justifyContent='center'
-					sx={{ height: '100vh' }}
-				>
-					<CssBaseline />
 					<Grid
 						container
-						xs={false}
-						sm={4}
-						md={7}
-						direction={'column'}
+						component='main'
 						justifyContent='center'
-						alignItems='center' // Add this line to center the content vertically
-						display='flex'
-						sx={
-							{
+						sx={{ height: '100vh' }}
+					>
+						<CssBaseline />
+						<Grid
+							container
+							xs={false}
+							sm={4}
+							md={7}
+							direction={'column'}
+							justifyContent='center'
+							alignItems='center' // Add this line to center the content vertically
+							display='flex'
+							sx={{
 								// backgroundRepeat: 'no-repeat',
 								backgroundColor: blue[50],
 								// backgroundSize: 'cover',
 								// backgroundPosition: 'center',
-							}
-						}
-					>
-						<Grid
-						item>
-						<img
-							src='/assets/Eye.png'
-							alt='gif'
-						/></Grid>
-						<Grid item>
-						<Typography
-					variant='h6'
-					noWrap
-					href='#app-bar-with-responsive-menu'
-					sx={{
-						mr: 2,
-						display: { xs: 'none', md: 'flex' },
-						fontFamily: 'monospace',
-						fontWeight: 700,
-						letterSpacing: '.3rem',
-						color: 'inherit',
-						textDecoration: 'none',
-						fontSize:'3rem',
-					}}
-				>
-					Procto PuLsE
-				</Typography>
-				</Grid>
-					</Grid>
+							}}
+						>
+							<Grid item>
+								<img
+									src='/assets/Eye.png'
+									alt='gif'
+								/>
+							</Grid>
+							<Grid item>
+								<Typography
+									variant='h6'
+									noWrap
+									href='#app-bar-with-responsive-menu'
+									sx={{
+										mr: 2,
+										display: { xs: 'none', md: 'flex' },
+										fontFamily: 'monospace',
+										fontWeight: 700,
+										letterSpacing: '.3rem',
+										color: 'inherit',
+										textDecoration: 'none',
+										fontSize: '3rem',
+									}}
+								>
+									Procto PuLsE
+								</Typography>
+							</Grid>
+						</Grid>
 						<Grid
 							item
 							xs={12}
@@ -139,139 +141,138 @@ export default function SignUp() {
 							elevation={6}
 							square
 						>
-						<Box
-							sx={{
-								my: 8,
-									mx: 4,
-								display: 'flex',
-								flexDirection: 'column',
-								alignItems: 'center',
-							}}
-						>
-							
-							<Typography
-								component='h1'
-								variant='h5'
-							>
-								Sign up
-							</Typography>
 							<Box
-								component='form'
-								noValidate
-								// onSubmit={handleSubmit}
-								sx={{ mt: 3 }}
+								sx={{
+									my: 8,
+									mx: 4,
+									display: 'flex',
+									flexDirection: 'column',
+									alignItems: 'center',
+								}}
 							>
-								<Grid
-									container
-									spacing={2}
+								<Typography
+									component='h1'
+									variant='h5'
+								>
+									Sign up
+								</Typography>
+								<Box
+									component='form'
+									noValidate
+									// onSubmit={handleSubmit}
+									sx={{ mt: 3 }}
 								>
 									<Grid
-										item
-										xs={12}
-										sm={6}
+										container
+										spacing={2}
 									>
-										<TextField
-											autoComplete='given-name'
-											name='firstname'
-											required
-											fullWidth
-											color='secondary'
-											id='firstname'
-											label='First Name'
-											autoFocus
-											value={formData.firstname}
-											onChange={handleChange}
-										/>
-									</Grid>
-									<Grid
-										item
-										xs={12}
-										sm={6}
-									>
-										<TextField
-											required
-											fullWidth
-											id='lastname'
-											color='secondary'
-											label='Last Name'
-											name='lastname'
-											autoComplete='family-name'
-											value={formData.lastname}
-											onChange={handleChange}
-										/>
-									</Grid>
-									<Grid
-										item
-										xs={12}
-									>
-										<TextField
-											required
-											fullWidth
-											color='secondary'
-											id='email'
-											label='Email Address'
-											name='email'
-											autoComplete='email'
-											value={formData.email}
-											onChange={handleChange}
-										/>
-									</Grid>
-									<Grid
-										item
-										xs={12}
-									>
-										<TextField
-											required
-											fullWidth
-											color='secondary'
-											name='password'
-											label='Password'
-											type='password'
-											id='password'
-											autoComplete='new-password'
-											value={formData.password}
-											onChange={handleChange}
-										/>
-									</Grid>
-									<Grid
-										item
-										xs={12}
-									>
-										<FormLabel>I am a student</FormLabel>
-										<Radio
-											name='role'
-											value='student'
-											checked={formData.role == 'student'}
-											onChange={handleChange}
-											sx={{
-												'& .MuiSvgIcon-root': {
-													fontSize: 28,
-												},
-												color: blue[300],
-												'&.Mui-checked': {
-													color: deepPurple[900],
-												},
-											}}
-										/>
-										<br />
-										<FormLabel>I am a teacher</FormLabel>
-										<Radio
-											name='role'
-											value='teacher'
-											checked={formData.role == 'teacher'}
-											onChange={handleChange}
-											sx={{
-												'& .MuiSvgIcon-root': {
-													fontSize: 28,
-												},
-												color: deepPurple[800],
-												'&.Mui-checked': {
-													color: deepPurple[600],
-												},
-											}}
-										/>
-										<br />
-										{/* <FormControlLabel
+										<Grid
+											item
+											xs={12}
+											sm={6}
+										>
+											<TextField
+												autoComplete='given-name'
+												name='firstname'
+												required
+												fullWidth
+												color='secondary'
+												id='firstname'
+												label='First Name'
+												autoFocus
+												value={formData.firstname}
+												onChange={handleChange}
+											/>
+										</Grid>
+										<Grid
+											item
+											xs={12}
+											sm={6}
+										>
+											<TextField
+												required
+												fullWidth
+												id='lastname'
+												color='secondary'
+												label='Last Name'
+												name='lastname'
+												autoComplete='family-name'
+												value={formData.lastname}
+												onChange={handleChange}
+											/>
+										</Grid>
+										<Grid
+											item
+											xs={12}
+										>
+											<TextField
+												required
+												fullWidth
+												color='secondary'
+												id='email'
+												label='Email Address'
+												name='email'
+												autoComplete='email'
+												value={formData.email}
+												onChange={handleChange}
+											/>
+										</Grid>
+										<Grid
+											item
+											xs={12}
+										>
+											<TextField
+												required
+												fullWidth
+												color='secondary'
+												name='password'
+												label='Password'
+												type='password'
+												id='password'
+												autoComplete='new-password'
+												value={formData.password}
+												onChange={handleChange}
+											/>
+										</Grid>
+										<Grid
+											item
+											xs={12}
+										>
+											<FormLabel>I am a student</FormLabel>
+											<Radio
+												name='role'
+												value='student'
+												checked={formData.role == 'student'}
+												onChange={handleChange}
+												sx={{
+													'& .MuiSvgIcon-root': {
+														fontSize: 28,
+													},
+													color: blue[300],
+													'&.Mui-checked': {
+														color: deepPurple[900],
+													},
+												}}
+											/>
+											<br />
+											<FormLabel>I am a teacher</FormLabel>
+											<Radio
+												name='role'
+												value='teacher'
+												checked={formData.role == 'teacher'}
+												onChange={handleChange}
+												sx={{
+													'& .MuiSvgIcon-root': {
+														fontSize: 28,
+													},
+													color: deepPurple[800],
+													'&.Mui-checked': {
+														color: deepPurple[600],
+													},
+												}}
+											/>
+											<br />
+											{/* <FormControlLabel
 											control={
 												<Checkbox
 													value='allowExtraEmails'
@@ -283,36 +284,36 @@ export default function SignUp() {
 											}
 											label='I want to receive inspiration, marketing promotions and updates via email.'
 										/> */}
+										</Grid>
 									</Grid>
-								</Grid>
-								<Button
-									type='submit'
-									fullWidth
-									variant='contained'
-									onClick={handleSubmit}
-									sx={{ mt: 3, mb: 2 ,backgroundColor: grey[900]}}
-								>
-									Sign Up
-								</Button>
-								<Grid
-									container
-									justifyContent='flex-end'
-								>
-									<Grid
-										item
-										onClick={() => navigate('/login')}
+									<Button
+										type='submit'
+										fullWidth
+										variant='contained'
+										onClick={handleSubmit}
+										sx={{ mt: 3, mb: 2, backgroundColor: grey[900] }}
 									>
-										<Link
-											href='/login'
-											variant='body2'
-											sx={{ color: 'black' }}
+										Sign Up
+									</Button>
+									<Grid
+										container
+										justifyContent='flex-end'
+									>
+										<Grid
+											item
+											onClick={() => navigate('/login')}
 										>
-											Already have an account? Sign in
-										</Link>
+											<Link
+												href='/login'
+												variant='body2'
+												sx={{ color: 'black' }}
+											>
+												Already have an account? Sign in
+											</Link>
+										</Grid>
 									</Grid>
-								</Grid>
+								</Box>
 							</Box>
-						</Box>
 						</Grid>
 					</Grid>
 				</ThemeProvider>

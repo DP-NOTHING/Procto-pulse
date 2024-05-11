@@ -7,10 +7,10 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 dotenv.config({ path: '../.env' });
 
-const corsOptions ={
-	origin:[`http://127.0.0.1:3001`,`${process.env.CLIENT}`],
-    credentials:true,
-}
+const corsOptions = {
+	// origin:[`http://127.0.0.1:3001`,`${process.env.CLIENT}`],
+	//   credentials:true,
+};
 
 app.use(cors(corsOptions));
 app.use(express.json());
