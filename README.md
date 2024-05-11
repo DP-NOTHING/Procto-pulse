@@ -41,6 +41,8 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#run-the-project">Run The Project</a></li>
+        <li><a href="#run-the-project-using-docker">Run The Project using Docker</a></li>
       </ul>
     </li>
     <li><a href="#screenshots">Screenshots</a></li>
@@ -94,16 +96,16 @@ How it is done:
 
 
 ### Prerequisites
-react , node and python must be installed
+React, Node and Python must be installed (if want to use docker images make sure docker is installed on the machine)
 
 
 ### Installation
 
-2. Clone the repo
+1. Clone the repo
    ```sh
    https://github.com/DP-NOTHING/Procto-pulse.git
    ```
-3. Install packages
+2. Install packages
    ```sh
    cd client
    npm install
@@ -112,9 +114,9 @@ react , node and python must be installed
    npm install
 
    cd service
-   pip install requirnment.txt
+   pip install requirements.txt
    ```
-4. Create env files
+3. Create env files
 
     in Client folder
    ```js
@@ -131,11 +133,8 @@ react , node and python must be installed
     PORT = 
     JWT_SECRET = ''
    ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-## Run the Project
+   
+### Run the Project
 
 1. start server using 
 ```sh
@@ -155,6 +154,46 @@ cd client
 npm start
 ```
 
+### Run the Project Using Docker
+
+The given project is dockerized. The images for all three major components are available on docker hub.
+
+  1. <a href="https://hub.docker.com/repository/docker/dm2903/proctopulse-python-service/general">Python Server</a><br/>
+      1. Run the container
+         ```sh
+         docker pull dm2903/proctopulse-python-service
+         ```
+      2. Run the container
+         ```sh
+         docker run -it -p 8000:8000 dm2903/proctopulse-python-service
+         ```
+      3. Your python server will be running at `http://127.0.0.1:8000`
+
+  2. <a href="https://hub.docker.com/repository/docker/dm2903/proctopulse-node-server/general">Node Server</a><br/>
+      1. Run the container
+         ```sh
+         docker pull dm2903/proctopulse-node-server
+         ```
+      2. Run the container (make sure to provide correct values for ENV variables)
+         ```sh
+         docker run -it -p 3000:3000 -e CONNECTIONSTRING="" -e JWT_SECRET="" -e SERVICE_URL="" -e PORT="" dm2903/proctopulse-node-server
+         ```
+      3. Your node server will be running at `http://127.0.0.1:3000`
+  
+  3. <a href="https://hub.docker.com/repository/docker/dm2903/proctopulse-react-client/general">React Server</a><br/>
+      1. Run the container
+         ```sh
+         docker pull dm2903/proctopulse-react-client
+         ```
+      2. Run the container (make sure to provide correct values for ENV variables)
+         ```sh
+         docker run -it -p 3001:3001 -e REACT_APP_SERVICE="" -e REACT_APP_BACKEND="" -e PORT="" dm2903/proctopulse-react-client
+         ```
+         `REACT_APP_SERVICE` is the endpoint where Python server is running.<br/>
+         `REACT_APP_BACKEND` is the endpoint where Node server is running.
+      4. Your react server will be running at `http://127.0.0.1:3001`
+  
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
 ## ScreenShots
