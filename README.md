@@ -158,7 +158,7 @@ npm start
 
 The given project is dockerized. The images for all three major components are available on docker hub.
 
-  1. <a href="https://hub.docker.com/repository/docker/dm2903/proctopulse-python-service/general">Python Server</a><br/>
+  1. <a href="https://hub.docker.com/r/dm2903/proctopulse-python-service">Python Server</a><br/>
       1. Run the container
          ```sh
          docker pull dm2903/proctopulse-python-service
@@ -169,7 +169,7 @@ The given project is dockerized. The images for all three major components are a
          ```
       3. Your python server will be running at `http://127.0.0.1:8000`
 
-  2. <a href="https://hub.docker.com/repository/docker/dm2903/proctopulse-node-server/general">Node Server</a><br/>
+  2. <a href="https://hub.docker.com/r/dm2903/proctopulse-node-server">Node Server</a><br/>
       1. Run the container
          ```sh
          docker pull dm2903/proctopulse-node-server
@@ -180,7 +180,7 @@ The given project is dockerized. The images for all three major components are a
          ```
       3. Your node server will be running at `http://127.0.0.1:3000`
   
-  3. <a href="https://hub.docker.com/repository/docker/dm2903/proctopulse-react-client/general">React Server</a><br/>
+  3. <a href="https://hub.docker.com/r/dm2903/proctopulse-react-client">React Server</a><br/>
       1. Run the container
          ```sh
          docker pull dm2903/proctopulse-react-client
