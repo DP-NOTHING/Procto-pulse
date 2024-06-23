@@ -9,7 +9,7 @@
     <img src="client/public/assets/Eye.png" alt="Logo" width="120" height="120">
   </a>
 
-  <a href="https://procto-pulse-client.vercel.app/"><h1 align="center">Procto Pulse</h1></a>
+  <h1 align="center"><a href="https://procto-pulse-client.vercel.app/">Procto Pulse</a></h1>
 
   <h4 align="center">
     No room for tricks, just honest clicks
